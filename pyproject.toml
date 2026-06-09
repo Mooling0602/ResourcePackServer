@@ -3,6 +3,7 @@ name = "resource-pack-server"
 version = "0.1.0"
 description = "A python based Minecraft resource pack server."
 readme = "README.md"
+license = { text = "GPL-3.0" }
 authors = [
     { name = "Mooling0602", email = "clemooling@outlook.com" }
 ]
