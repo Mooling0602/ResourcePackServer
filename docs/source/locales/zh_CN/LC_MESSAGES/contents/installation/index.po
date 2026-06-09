@@ -1,0 +1,94 @@
+# Chinese (Simplified) translations for ResourcePackServer
+# Copyright (C) 2026, Mooling0602
+# This file is distributed under the same license as the ResourcePackServer package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ResourcePackServer 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-09 00:00+0000\n"
+"PO-Revision-Date: 2026-06-09 00:00+0000\n"
+"Last-Translator: Mooling0602 <clemooling@outlook.com>\n"
+"Language-Team: Chinese (Simplified)\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+
+#: ../../source/contents/installation/index.rst:2
+msgid "Installation"
+msgstr "安装指南"
+
+#: ../../source/contents/installation/index.rst:4
+msgid ""
+"ResourcePackServer can run in two modes: as a **standalone HTTP server** or "
+"as an **MCDReforged plugin**."
+msgstr "ResourcePackServer 可以以两种模式运行：**独立 HTTP 服务器** 或 **MCDReforged 插件**。"
+
+#: ../../source/contents/installation/index.rst:6
+msgid "You only need to choose **one** mode that fits your setup."
+msgstr "你只需要选择一种适合你环境的模式。"
+
+#: ../../source/contents/installation/index.rst:11
+msgid "Standalone Mode (pip install)"
+msgstr "独立模式（pip 安装）"
+
+#: ../../source/contents/installation/index.rst:13
+msgid "Install from source or PyPI (future):"
+msgstr "从源码或 PyPI 安装（未来支持）："
+
+#: ../../source/contents/installation/index.rst:19
+msgid "Or install with uv:"
+msgstr "或使用 uv 安装："
+
+#: ../../source/contents/installation/index.rst:25
+msgid "Then run:"
+msgstr "然后运行："
+
+#: ../../source/contents/installation/index.rst:31
+msgid "See :doc:`/contents/usage/index` for more CLI options."
+msgstr "更多 CLI 参数请参见 :doc:`/contents/usage/index`。"
+
+#: ../../source/contents/installation/index.rst:36
+msgid "MCDReforged Plugin Mode"
+msgstr "MCDReforged 插件模式"
+
+#: ../../source/contents/installation/index.rst:38
+msgid "Install the plugin via MCDR command:"
+msgstr "通过 MCDR 命令安装插件："
+
+#: ../../source/contents/installation/index.rst:44
+msgid ""
+"Alternatively, download the ``.mcdr`` package from `GitHub Releases <https:/"
+"/github.com/Mooling0602/ResourcePackServer/releases>`__ and place it into th"
+"e ``plugins/`` directory."
+msgstr ""
+"或者从 `GitHub Releases <https://github.com/Mooling0602/ResourcePackServer/rele"
+"ases>`__ 下载 ``.mcdr`` 包，放入 ``plugins/`` 目录。"
+
+#: ../../source/contents/installation/index.rst:48
+msgid "The plugin will auto-load. Use ``!!rps status`` to verify."
+msgstr "插件将自动加载。使用 ``!!rps status`` 验证。"
+
+#: ../../source/contents/installation/index.rst:51
+msgid "Dependencies"
+msgstr "依赖"
+
+#: ../../source/contents/installation/index.rst:53
+msgid "This plugin depends on:"
+msgstr "此插件依赖："
+
+#: ../../source/contents/installation/index.rst:55
+msgid "`MCDReforged <https://github.com/MCDReforged/MCDReforged>`__ >= 2.0.0"
+msgstr ""
+
+#: ../../source/contents/installation/index.rst:57
+msgid "No other external dependencies are required (stdlib-only HTTP server)."
+msgstr "不需要其他外部依赖（仅使用标准库 HTTP 服务器）。"
+
+#: ../../source/contents/installation/index.rst:61
+msgid ""
+"Make sure MCDReforged is installed and configured first. Visit the `MCDR doc"
+"s <https://docs.mcdreforged.com>`__ for guidance."
+msgstr "请确保已安装并配置了 MCDReforged。请查阅 `MCDR 文档 <https://docs.mcdreforged.com>`__ 获取指导。"

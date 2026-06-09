@@ -1,0 +1,269 @@
+# Chinese (Simplified) translations for ResourcePackServer
+# Copyright (C) 2026, Mooling0602
+# This file is distributed under the same license as the ResourcePackServer package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ResourcePackServer 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-09 00:00+0000\n"
+"PO-Revision-Date: 2026-06-09 00:00+0000\n"
+"Last-Translator: Mooling0602 <clemooling@outlook.com>\n"
+"Language-Team: Chinese (Simplified)\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+
+#: ../../source/contents/usage/index.rst:2
+msgid "Usage"
+msgstr "使用指南"
+
+#: ../../source/contents/usage/index.rst:4
+msgid ""
+"ResourcePackServer hosts ``.zip`` resource pack files over HTTP. Minecraft c"
+"lients can download packs via the ``resource-pack`` field in ``server.proper"
+"ties``."
+msgstr ""
+"ResourcePackServer 通过 HTTP 托管 ``.zip`` 资源包文件。Minecraft 客户端可通过 ``server.prope"
+"rties`` 中的 ``resource-pack`` 字段下载资源包。"
+
+#: ../../source/contents/usage/index.rst:7
+msgid "Quick Start"
+msgstr "快速开始"
+
+#: ../../source/contents/usage/index.rst:9
+msgid "**1. Prepare your packs**"
+msgstr "**1. 准备你的资源包**"
+
+#: ../../source/contents/usage/index.rst:11
+msgid ""
+"Place ``.zip`` resource pack files in a directory (default: ``./resource_pac"
+"ks``):"
+msgstr "将 ``.zip`` 资源包文件放入一个目录（默认: ``./resource_packs``）："
+
+#: ../../source/contents/usage/index.rst:20
+msgid "**2. Start the server**"
+msgstr "**2. 启动服务器**"
+
+#: ../../source/contents/usage/index.rst:26
+msgid "**3. Browse the pack list**"
+msgstr "**3. 浏览资源包列表**"
+
+#: ../../source/contents/usage/index.rst:28
+msgid ""
+"Open ``http://localhost:8080/`` in a browser. You'll see a table of all pack"
+"s with their SHA1 hashes."
+msgstr "在浏览器中打开 ``http://localhost:8080/``。你会看到一个包含所有资源包及其 SHA1 哈希的表格。"
+
+#: ../../source/contents/usage/index.rst:30
+msgid "**4. Configure Minecraft**"
+msgstr "**4. 配置 Minecraft**"
+
+#: ../../source/contents/usage/index.rst:32
+msgid "Edit ``server.properties``:"
+msgstr "编辑 ``server.properties``："
+
+#: ../../source/contents/usage/index.rst:39
+msgid ""
+"The merged pack combines all your packs into one zip. See :doc:`/contents/co"
+"nfig/index` for merge options."
+msgstr "合并包将所有资源包合并为一个 zip 文件。合并选项参见 :doc:`/contents/config/index`。"
+
+#: ../../source/contents/usage/index.rst:44
+msgid "Standalone CLI Arguments"
+msgstr "独立模式 CLI 参数"
+
+#: ../../source/contents/usage/index.rst:53
+msgid "Argument"
+msgstr "参数"
+
+#: ../../source/contents/usage/index.rst:54
+msgid "Default"
+msgstr "默认值"
+
+#: ../../source/contents/usage/index.rst:111
+msgid "Description"
+msgstr "描述"
+
+#: ../../source/contents/usage/index.rst:56
+msgid "``--host``"
+msgstr ""
+
+#: ../../source/contents/usage/index.rst:57
+msgid "``0.0.0.0``"
+msgstr ""
+
+#: ../../source/contents/usage/index.rst:58
+msgid "IP address to bind"
+msgstr "绑定的 IP 地址"
+
+#: ../../source/contents/usage/index.rst:59
+msgid "``--port``"
+msgstr ""
+
+#: ../../source/contents/usage/index.rst:60
+msgid "``8080``"
+msgstr ""
+
+#: ../../source/contents/usage/index.rst:61
+msgid "Port to listen on"
+msgstr "监听的端口"
+
+#: ../../source/contents/usage/index.rst:62
+msgid "``--pack-dir``"
+msgstr ""
+
+#: ../../source/contents/usage/index.rst:63
+msgid "``./resource_packs``"
+msgstr ""
+
+#: ../../source/contents/usage/index.rst:64
+msgid "Directory containing ``.zip`` packs"
+msgstr "包含 ``.zip`` 资源包的目录"
+
+#: ../../source/contents/usage/index.rst:65
+msgid "``--public-url``"
+msgstr ""
+
+#: ../../source/contents/usage/index.rst:72
+msgid "*(empty)*"
+msgstr ""
+
+#: ../../source/contents/usage/index.rst:67
+msgid "Public URL prefix for external access"
+msgstr "外部访问的公网 URL 前缀"
+
+#: ../../source/contents/usage/index.rst:68
+msgid "``--merge`` / ``--no-merge``"
+msgstr ""
+
+#: ../../source/contents/usage/index.rst:69
+msgid "``--merge``"
+msgstr ""
+
+#: ../../source/contents/usage/index.rst:70
+msgid "Enable/disable merged pack generation"
+msgstr "启用/禁用合并包生成"
+
+#: ../../source/contents/usage/index.rst:71
+msgid "``--priority``"
+msgstr ""
+
+#: ../../source/contents/usage/index.rst:73
+msgid "Pack filenames in merge priority order (highest first)"
+msgstr "按合并优先级排序的资源包文件名（最高优先级在前）"
+
+#: ../../source/contents/usage/index.rst:74
+msgid "``--debug``"
+msgstr ""
+
+#: ../../source/contents/usage/index.rst:75
+msgid "``false``"
+msgstr ""
+
+#: ../../source/contents/usage/index.rst:76
+msgid "Enable debug logging"
+msgstr "启用调试日志"
+
+#: ../../source/contents/usage/index.rst:77
+msgid "``--version``"
+msgstr ""
+
+#: ../../source/contents/usage/index.rst:79
+msgid "Show version and exit"
+msgstr "显示版本并退出"
+
+#: ../../source/contents/usage/index.rst:84
+msgid "Merged Pack"
+msgstr "合并包"
+
+#: ../../source/contents/usage/index.rst:86
+msgid ""
+"Minecraft only accepts **one** resource pack URL. ResourcePackServer solves "
+"this by merging multiple packs into a single ``merged.zip``, available at ``"
+"/merged.zip``."
+msgstr ""
+"Minecraft 只接受**一个**资源包 URL。ResourcePackServer 通过将多个包合并为一个 ``merged.zip`` 来解决"
+"此问题，合并包位于 ``/merged.zip``。"
+
+#: ../../source/contents/usage/index.rst:88
+msgid ""
+"Packs are merged in **priority order** (configurable via ``--priority`` or t"
+"he config file)"
+msgstr "资源包按**优先级顺序**合并（可通过 ``--priority`` 或配置文件配置）"
+
+#: ../../source/contents/usage/index.rst:89
+msgid "Higher-priority packs **override** lower-priority ones on file-level"
+msgstr "高优先级包会在文件级别**覆盖**低优先级包"
+
+#: ../../source/contents/usage/index.rst:90
+msgid "The ``pack.mcmeta`` description combines all pack descriptions"
+msgstr "``pack.mcmeta`` 的描述字段会合并所有包的描述"
+
+#: ../../source/contents/usage/index.rst:91
+msgid "The ``pack.png`` icon is taken from the highest-priority pack that has one"
+msgstr "``pack.png`` 图标取自具有该文件的最高优先级包"
+
+#: ../../source/contents/usage/index.rst:92
+msgid ""
+"The merged pack is **cached** and automatically regenerated when any source "
+"pack changes"
+msgstr "合并包会被**缓存**，当任何源包更改时会自动重新生成"
+
+#: ../../source/contents/usage/index.rst:94
+msgid "Example with priority:"
+msgstr "带优先级的示例："
+
+#: ../../source/contents/usage/index.rst:105
+msgid "HTTP Endpoints"
+msgstr "HTTP 端点"
+
+#: ../../source/contents/usage/index.rst:110
+msgid "Endpoint"
+msgstr "端点"
+
+#: ../../source/contents/usage/index.rst:112
+msgid "``GET /``"
+msgstr ""
+
+#: ../../source/contents/usage/index.rst:113
+msgid "HTML page listing all packs and the merged pack"
+msgstr "列出所有资源包和合并包的 HTML 页面"
+
+#: ../../source/contents/usage/index.rst:114
+msgid "``GET /merged.zip``"
+msgstr ""
+
+#: ../../source/contents/usage/index.rst:115
+msgid "Download the merged resource pack"
+msgstr "下载合并后的资源包"
+
+#: ../../source/contents/usage/index.rst:116
+msgid "``GET /<filename>.zip``"
+msgstr ""
+
+#: ../../source/contents/usage/index.rst:117
+msgid "Download an individual pack"
+msgstr "下载单个资源包"
+
+#: ../../source/contents/usage/index.rst:119
+msgid "Each ``.zip`` response includes these headers:"
+msgstr "每个 ``.zip`` 响应包含以下头："
+
+#: ../../source/contents/usage/index.rst:121
+msgid "``Content-Type: application/zip``"
+msgstr ""
+
+#: ../../source/contents/usage/index.rst:122
+msgid "``X-Resource-Pack-SHA1: <sha1>`` — the SHA1 hash Minecraft needs"
+msgstr ""
+
+#: ../../source/contents/usage/index.rst:123
+msgid "``Content-Disposition: attachment``"
+msgstr ""
+
+#: ../../source/contents/usage/index.rst:124
+msgid "``Cache-Control: public, max-age=3600``"
+msgstr ""

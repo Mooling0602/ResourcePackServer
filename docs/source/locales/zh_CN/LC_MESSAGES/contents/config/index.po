@@ -1,0 +1,232 @@
+# Chinese (Simplified) translations for ResourcePackServer
+# Copyright (C) 2026, Mooling0602
+# This file is distributed under the same license as the ResourcePackServer package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ResourcePackServer 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-09 00:00+0000\n"
+"PO-Revision-Date: 2026-06-09 00:00+0000\n"
+"Last-Translator: Mooling0602 <clemooling@outlook.com>\n"
+"Language-Team: Chinese (Simplified)\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+
+#: ../../source/contents/config/index.rst:2
+msgid "Configuration"
+msgstr "配置说明"
+
+#: ../../source/contents/config/index.rst:6
+msgid ""
+"In **standalone mode**, use CLI arguments (see :doc:`/contents/usage/index`)"
+". In **MCDR mode**, configuration is loaded from MCDR's config file at ``con"
+"fig/resource_pack_server/config.json``."
+msgstr ""
+"在**独立模式**下，使用 CLI 参数（参见 :doc:`/contents/usage/index`）。在 **MCDR 模式**下，配置从 MCD"
+"R 的配置文件 ``config/resource_pack_server/config.json`` 加载。"
+
+#: ../../source/contents/config/index.rst:10
+msgid "Configuration File"
+msgstr "配置文件"
+
+#: ../../source/contents/config/index.rst:12
+msgid ""
+"The config file is auto-generated on first load. Default path (MCDR mode): `"
+"`config/resource_pack_server/config.json``."
+msgstr "配置文件在首次加载时自动生成。默认路径（MCDR 模式）：``config/resource_pack_server/config.json``。"
+
+#: ../../source/contents/config/index.rst:14
+msgid "Default config:"
+msgstr "默认配置："
+
+#: ../../source/contents/config/index.rst:39
+msgid "Top-Level Fields"
+msgstr "顶级字段"
+
+#: ../../source/contents/config/index.rst:119
+msgid "Field"
+msgstr "字段"
+
+#: ../../source/contents/config/index.rst:120
+msgid "Type"
+msgstr "类型"
+
+#: ../../source/contents/config/index.rst:121
+msgid "Default"
+msgstr ""
+
+#: ../../source/contents/config/index.rst:122
+msgid "Description"
+msgstr ""
+
+#: ../../source/contents/config/index.rst:123
+msgid "``enabled``"
+msgstr ""
+
+#: ../../source/contents/config/index.rst:124
+msgid "``bool``"
+msgstr ""
+
+#: ../../source/contents/config/index.rst:125
+msgid "``true``"
+msgstr ""
+
+#: ../../source/contents/config/index.rst:51
+msgid "Set to ``false`` to disable the plugin entirely"
+msgstr "设置为 ``false`` 完全禁用插件"
+
+#: ../../source/contents/config/index.rst:52
+msgid "``debug``"
+msgstr ""
+
+#: ../../source/contents/config/index.rst:54
+msgid "``false``"
+msgstr ""
+
+#: ../../source/contents/config/index.rst:55
+msgid "Enable debug logging"
+msgstr ""
+
+#: ../../source/contents/config/index.rst:58
+msgid "Server Configuration"
+msgstr "服务器配置"
+
+#: ../../source/contents/config/index.rst:60
+msgid "``server`` section:"
+msgstr "``server`` 部分："
+
+#: ../../source/contents/config/index.rst:69
+msgid "``host``"
+msgstr ""
+
+#: ../../source/contents/config/index.rst:103
+msgid "``str``"
+msgstr ""
+
+#: ../../source/contents/config/index.rst:71
+msgid "``0.0.0.0``"
+msgstr ""
+
+#: ../../source/contents/config/index.rst:72
+msgid "HTTP server bind address"
+msgstr "HTTP 服务器绑定地址"
+
+#: ../../source/contents/config/index.rst:73
+msgid "``port``"
+msgstr ""
+
+#: ../../source/contents/config/index.rst:107
+msgid "``int``"
+msgstr ""
+
+#: ../../source/contents/config/index.rst:75
+msgid "``8080``"
+msgstr ""
+
+#: ../../source/contents/config/index.rst:76
+msgid "HTTP server port"
+msgstr "HTTP 服务器端口"
+
+#: ../../source/contents/config/index.rst:77
+msgid "``pack_dir``"
+msgstr ""
+
+#: ../../source/contents/config/index.rst:79
+msgid "``./resource_packs``"
+msgstr ""
+
+#: ../../source/contents/config/index.rst:80
+msgid "Directory containing ``.zip`` resource pack files"
+msgstr "包含 ``.zip`` 资源包文件的目录"
+
+#: ../../source/contents/config/index.rst:81
+msgid "``public_url``"
+msgstr ""
+
+#: ../../source/contents/config/index.rst:83
+msgid "*(empty)*"
+msgstr ""
+
+#: ../../source/contents/config/index.rst:84
+msgid "Public-facing URL (used if server is behind a proxy)"
+msgstr "面向公网的 URL（服务器位于反向代理后时使用）"
+
+#: ../../source/contents/config/index.rst:87
+msgid "Command Configuration"
+msgstr "命令配置"
+
+#: ../../source/contents/config/index.rst:89
+msgid "``command`` section (MCDR mode only):"
+msgstr "``command`` 部分（仅 MCDR 模式）："
+
+#: ../../source/contents/config/index.rst:101
+msgid "Whether to register MCDR commands"
+msgstr "是否注册 MCDR 命令"
+
+#: ../../source/contents/config/index.rst:102
+msgid "``prefix``"
+msgstr ""
+
+#: ../../source/contents/config/index.rst:104
+msgid "``!!rps``"
+msgstr ""
+
+#: ../../source/contents/config/index.rst:105
+msgid "Command prefix"
+msgstr "命令前缀"
+
+#: ../../source/contents/config/index.rst:106
+msgid "``permission_level``"
+msgstr ""
+
+#: ../../source/contents/config/index.rst:108
+msgid "``1``"
+msgstr ""
+
+#: ../../source/contents/config/index.rst:109
+msgid "Minimum MCDR permission level for commands"
+msgstr "命令的最低 MCDR 权限等级"
+
+#: ../../source/contents/config/index.rst:112
+msgid "Merge Configuration"
+msgstr "合并配置"
+
+#: ../../source/contents/config/index.rst:114
+msgid "``merge`` section:"
+msgstr "``merge`` 部分："
+
+#: ../../source/contents/config/index.rst:126
+msgid "Enable the ``/merged.zip`` endpoint"
+msgstr "启用 ``/merged.zip`` 端点"
+
+#: ../../source/contents/config/index.rst:127
+msgid "``pack_priority``"
+msgstr ""
+
+#: ../../source/contents/config/index.rst:128
+msgid "``list[str]``"
+msgstr ""
+
+#: ../../source/contents/config/index.rst:129
+msgid "``[]``"
+msgstr ""
+
+#: ../../source/contents/config/index.rst:130
+msgid ""
+"Ordered list of pack filenames (highest priority first). Unlisted packs are "
+"appended alphabetically."
+msgstr "按优先级排序的资源包文件名列表（最高优先级在前）。未列出的包按字母顺序追加。"
+
+#: ../../source/contents/config/index.rst:133
+msgid "Example: priority ordering"
+msgstr "示例：优先级排序"
+
+#: ../../source/contents/config/index.rst:148
+msgid ""
+"With this config, ``vanilla_tweaks.zip`` has the highest priority — its asse"
+"ts override any conflicting assets from lower-priority packs."
+msgstr "使用此配置，``vanilla_tweaks.zip`` 具有最高优先级——其资源会覆盖低优先级包中的冲突资源。"

@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from sphinx.application import Sphinx
 
-sys.path.insert(0, os.path.abspath(os.path.join("..", "..")))
+sys.path.insert(0, os.path.abspath(os.path.join("..", "..", "src")))
 
 # Mock MCDR to avoid import errors during doc build
 from unittest.mock import MagicMock

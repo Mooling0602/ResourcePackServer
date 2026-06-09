@@ -3,7 +3,7 @@
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from mcdreforged.api.all import PluginServerInterface, Metadata
+    from mcdreforged.api.all import Metadata, PluginServerInterface
 
 server: "PluginServerInterface"
 metadata: "Metadata"

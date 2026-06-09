@@ -2,6 +2,10 @@
 
 LANG_CODE=$1
 
+# Always compile translation .mo files first
+echo "Compiling translations..."
+sphinx-intl build
+
 if [ -n "$LANG_CODE" ]; then
   echo "Building docs for language: $LANG_CODE..."
   sphinx-build -b html source/ "build/html_$LANG_CODE/" -D language="$LANG_CODE"
