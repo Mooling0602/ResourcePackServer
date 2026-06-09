@@ -11,5 +11,10 @@
     "dependencies": {
         "mcdreforged": ">=2.14.1"
     },
-    "entrypoint": "resource_pack_server.mcdr.mcdr_entrypoint"
+    "entrypoint": "resource_pack_server.mcdr.mcdr_entrypoint",
+    "archive_name": "ResourcePackServer-v{version}.pyz",
+    "resources": [
+        "__main__.py",
+        "LICENSE"
+    ]
 }
