@@ -7,29 +7,23 @@ You only need to choose **one** mode that fits your setup.
 
 ----
 
-Standalone Mode (install from source)
---------------------------------------
+Standalone Mode
+----------------
 
-Clone the repository and install:
+Download the ``.pyz`` file from `GitHub Releases <https://github.com/Mooling0602/ResourcePackServer/releases>`__,
+then run it directly:
+
+.. code-block:: bash
+
+    python ResourcePackServer-v0.1.0.pyz --port 8080 --pack-dir ./resource_packs
+
+Or install from source:
 
 .. code-block:: bash
 
     git clone https://github.com/Mooling0602/ResourcePackServer.git
     cd ResourcePackServer
     pip install .
-
-Or install with uv:
-
-.. code-block:: bash
-
-    git clone https://github.com/Mooling0602/ResourcePackServer.git
-    cd ResourcePackServer
-    uv pip install .
-
-Then run:
-
-.. code-block:: bash
-
     python -m resource_pack_server --port 8080 --pack-dir ./resource_packs
 
 See :doc:`/contents/usage/index` for more CLI options.
@@ -39,15 +33,10 @@ See :doc:`/contents/usage/index` for more CLI options.
 MCDReforged Plugin Mode
 -----------------------
 
-1. Clone the repository:
+Download the ``.pyz`` file from `GitHub Releases <https://github.com/Mooling0602/ResourcePackServer/releases>`__
+and place it into your MCDR ``plugins/`` directory.
 
-.. code-block:: bash
-
-    git clone https://github.com/Mooling0602/ResourcePackServer.git
-
-2. Copy the ``src/resource_pack_server/`` folder into your MCDR ``plugins/`` directory.
-
-3. The plugin will auto-load. Use ``!!rps status`` to verify.
+The plugin will auto-load. Use ``!!rps status`` to verify.
 
 Dependencies
 ------------
