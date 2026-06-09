@@ -11,5 +11,5 @@
     "dependencies": {
         "mcdreforged": ">=2.14.1"
     },
-    "entrypoint": "mcdr.mcdr_entrypoint"
+    "entrypoint": "resource_pack_server.mcdr.mcdr_entrypoint"
 }

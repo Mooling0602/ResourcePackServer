@@ -1,0 +1,54 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate release tag
+        shell: bash
+        run: |
+          tag="${GITHUB_REF_NAME}"
+          if [[ ! "$tag" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::Invalid release tag: $tag (expected X.Y.Z format)"
+            exit 1
+          fi
+
+      - uses: astral-sh/setup-uv@v5
+
+      - name: Setup Python
+        run: uv python install 3.12
+
+      - name: Install dependencies
+        run: uv sync --all-groups --no-progress
+
+      - name: Pack plugin
+        run: |
+          uv run mcdreforged pack -i src -o ./dist --ignore-patterns "__pycache__" "*.pyc" "*.pyo" ".gitignore"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mcdr-plugin
+          path: dist/*.mcdr
+          if-no-files-found: error
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: v${{ github.ref_name }}
+          generate_release_notes: true
+          files: dist/*.mcdr
