@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from typing import Optional
-
 from mcdreforged.api.all import (
     PluginServerInterface,
     CommandSource,
@@ -18,8 +16,8 @@ from resource_pack_server.server import ResourcePackHttpServer
 from resource_pack_server.logger import get as get_logger
 from resource_pack_server import constants
 
-_http_server: Optional[ResourcePackHttpServer] = None
-_config: Optional[RpsConfig] = None
+_http_server: ResourcePackHttpServer | None = None
+_config: RpsConfig | None = None
 
 
 def _reply(source: CommandSource, msg: str | RTextBase) -> None:

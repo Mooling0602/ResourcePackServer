@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import functools
 from pathlib import Path
-from typing import Optional
 
 from mcdreforged.api.all import Serializable
 
@@ -54,7 +53,7 @@ class RpsConfig(Serializable):
         return Path(self.server.pack_dir).resolve()
 
 
-_config: Optional[RpsConfig] = None
+_config: RpsConfig | None = None
 
 
 def set_config_instance(cfg: RpsConfig) -> None:

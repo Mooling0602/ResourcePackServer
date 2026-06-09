@@ -16,8 +16,6 @@ import json
 import threading
 import zipfile
 from pathlib import Path
-from typing import Optional
-
 from resource_pack_server.config import RpsConfig
 from resource_pack_server.hash_utils import sha1_hex
 from resource_pack_server.logger import get as get_logger
@@ -60,7 +58,7 @@ def _read_zip_manifest(zf: zipfile.ZipFile) -> dict[str, bytes]:
 def _merge_pack_mcmeta(manifests: list[dict[str, bytes]]) -> bytes:
     """Merge pack.mcmeta: take highest-priority mcmeta as base, append
     descriptions from lower-priority packs."""
-    base: Optional[dict] = None
+    base: dict | None = None
     descriptions: list[str] = []
 
     for manifest in manifests:
@@ -91,7 +89,7 @@ def _merge_pack_mcmeta(manifests: list[dict[str, bytes]]) -> bytes:
     return json.dumps(base, indent=2, ensure_ascii=False).encode("utf-8")
 
 
-def _merge_pack_png(manifests: list[dict[str, bytes]]) -> Optional[bytes]:
+def _merge_pack_png(manifests: list[dict[str, bytes]]) -> bytes | None:
     """Return the first pack.png found, from highest priority to lowest."""
     for manifest in manifests:
         if "pack.png" in manifest:
@@ -105,7 +103,7 @@ class PackMerger:
     def __init__(self, config: RpsConfig):
         self._config = config
         self._lock = threading.Lock()
-        self._cache: Optional[tuple[bytes, str]] = None  # (zip_data, sha1)
+        self._cache: tuple[bytes, str] | None = None  # (zip_data, sha1)
         self._cache_mtimes: dict[str, float] = {}
         self.logger = get_logger()
 

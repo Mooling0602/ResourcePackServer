@@ -5,7 +5,6 @@ from __future__ import annotations
 import threading
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from pathlib import Path
-from typing import Optional
 from urllib.parse import urlparse
 
 from resource_pack_server.config import RpsConfig
@@ -147,8 +146,8 @@ def _handler_factory(
 class ResourcePackHttpServer:
     def __init__(self, config: RpsConfig):
         self._config = config
-        self._httpd: Optional[HTTPServer] = None
-        self._thread: Optional[threading.Thread] = None
+        self._httpd: HTTPServer | None = None
+        self._thread: threading.Thread | None = None
         self.logger = get_logger()
         self.merger = PackMerger(config)
 

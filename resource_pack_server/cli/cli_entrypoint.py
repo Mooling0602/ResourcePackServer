@@ -7,9 +7,9 @@ import signal
 import sys
 
 from resource_pack_server.config import RpsConfig, set_config_instance
+from resource_pack_server.constants import PLUGIN_VERSION
 from resource_pack_server.logger import get as get_logger
 from resource_pack_server.server import ResourcePackHttpServer
-from resource_pack_server.constants import PLUGIN_VERSION
 
 
 def cli_entry() -> None:
