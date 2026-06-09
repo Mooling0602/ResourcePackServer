@@ -1,6 +1,3 @@
-from __future__ import annotations
-
-
 def main():
     """Entry point for `python -m resource_pack_server` or the console script."""
     try:

@@ -9,8 +9,6 @@ Strategy:
   - Result cached to memory; regenerated when any source mtime changes.
 """
 
-from __future__ import annotations
-
 import io
 import json
 import threading

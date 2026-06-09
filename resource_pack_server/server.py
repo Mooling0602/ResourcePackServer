@@ -1,7 +1,5 @@
 """Shared HTTP server core — usable from both CLI and MCDR modes."""
 
-from __future__ import annotations
-
 import threading
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from pathlib import Path

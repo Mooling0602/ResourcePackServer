@@ -1,7 +1,5 @@
 """MCDReforged plugin hooks — on_load / on_unload / commands."""
 
-from __future__ import annotations
-
 from mcdreforged.api.all import (
     PluginServerInterface,
     CommandSource,

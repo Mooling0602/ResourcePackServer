@@ -1,7 +1,5 @@
 """SHA1 hashing — Minecraft clients use SHA1 to identify resource packs."""
 
-from __future__ import annotations
-
 import hashlib
 from pathlib import Path
 
