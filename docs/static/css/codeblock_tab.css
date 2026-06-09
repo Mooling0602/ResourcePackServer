@@ -1,0 +1,14 @@
+:root {
+    --tabs--padding-x: 1em;
+}
+.tab-set > label {
+    padding: 0.3em var(--tabs--padding-x) 0.3em;
+}
+
+.tab-content {
+    box-shadow: none;
+}
+
+.tab-label {
+    user-select: none;
+}

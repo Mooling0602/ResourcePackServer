@@ -1,0 +1,51 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ResourcePackServer 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-01 00:00+0000\n"
+"Last-Translator: Mooling0602 <clemooling@outlook.com>\n"
+"Language-Team: Chinese (Simplified)\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Commands (MCDR Mode)"
+msgstr "命令参考（MCDR 模式）"
+
+msgid "When running as an MCDReforged plugin, ResourcePackServer registers in-game commands. The default command prefix is ``!!rps``."
+msgstr "作为 MCDReforged 插件运行时，ResourcePackServer 会注册游戏内命令。默认命令前缀为 ``!!rps``。"
+
+msgid "Command prefix and permission level can be changed in the config file. See :doc:`/contents/config/index`."
+msgstr "命令前缀和权限等级可在配置文件中修改。参见 :doc:`/contents/config/index`。"
+
+msgid "Command Reference"
+msgstr "命令参考"
+
+msgid "Command"
+msgstr "命令"
+
+msgid "Permission"
+msgstr "权限"
+
+msgid "Show plugin version and available subcommands"
+msgstr "显示插件版本和可用的子命令"
+
+msgid "Show help message with all subcommands"
+msgstr "显示包含所有子命令的帮助信息"
+
+msgid "List all resource packs and their SHA1 hashes"
+msgstr "列出所有资源包及其 SHA1 哈希"
+
+msgid "Show HTTP server status and merged pack info"
+msgstr "显示 HTTP 服务器状态和合并包信息"
+
+msgid "Force rebuild the merged pack (clears cache)"
+msgstr "强制重建合并包（清除缓存）"
+
+msgid "Reload the plugin (re-reads config and restarts HTTP server)"
+msgstr "重载插件（重新读取配置并重启 HTTP 服务器）"
+
+msgid "Example Usage"
+msgstr "使用示例"

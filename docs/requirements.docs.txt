@@ -1,0 +1,11 @@
+sphinx>=6.2.1
+sphinx-rtd-theme>=3.0.0
+sphinx-autobuild
+sphinx_copybutton
+sphinx-intl
+sphinx-autodoc-typehints
+sphinx-prompt
+sphinxcontrib-mermaid
+sphinx-inline-tabs
+sphinx-design
+sphinxcontrib.jquery

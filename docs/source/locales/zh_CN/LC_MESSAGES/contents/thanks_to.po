@@ -1,0 +1,30 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ResourcePackServer 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-01 00:00+0000\n"
+"Last-Translator: Mooling0602 <clemooling@outlook.com>\n"
+"Language-Team: Chinese (Simplified)\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Acknowledgements"
+msgstr "致谢"
+
+msgid "ResourcePackServer draws inspiration and architecture patterns from these excellent projects:"
+msgstr "ResourcePackServer 从以下优秀项目中汲取了灵感和架构模式："
+
+msgid "`PrimeBackup <https://github.com/TISUnion/PrimeBackup>`__ — The dual-mode (standalone + MCDR plugin) architecture"
+msgstr "`PrimeBackup <https://github.com/TISUnion/PrimeBackup>`__ — 双模式（独立 + MCDR 插件）架构"
+
+msgid "`MCDReforged <https://github.com/MCDReforged/MCDReforged>`__ — The plugin framework that makes this possible"
+msgstr "`MCDReforged <https://github.com/MCDReforged/MCDReforged>`__ — 使之成为可能的插件框架"
+
+msgid "`LocationAPI-MCDR <https://github.com/Mooling0602/LocationAPI-MCDR>`__ — Documentation structure reference"
+msgstr "`LocationAPI-MCDR <https://github.com/Mooling0602/LocationAPI-MCDR>`__ — 文档结构参考"
+
+msgid "Licensed under GPL-3.0."
+msgstr "基于 GPL-3.0 许可。"

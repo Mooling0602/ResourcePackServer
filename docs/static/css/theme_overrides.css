@@ -1,0 +1,50 @@
+/* override table width restrictions */
+@media screen and (min-width: 767px) {
+    .wy-table-responsive table td,
+    .wy-table-responsive table th {
+        white-space: normal !important;
+    }
+
+    .wy-table-responsive {
+        margin-bottom: 24px;
+        max-width: 100%;
+        overflow: visible !important;
+    }
+}
+
+.wy-nav-content {
+    max-width: 850px !important;
+}
+
+html.writer-html4 .rst-content dl:not(.docutils) .k,
+html.writer-html5
+    .rst-content
+    dl[class]:not(.option-list):not(.field-list):not(.footnote):not(
+        .glossary
+    ):not(.simple)
+    .k {
+    font-style: inherit !important;
+}
+
+.highlight {
+    tab-size: 4;
+}
+
+.tab-set {
+    margin: 0;
+}
+
+.rst-content code,
+.rst-content tt,
+code {
+    background: rgba(251, 251, 251);
+}
+
+.rst-content table.docutils td:first-child,
+.rst-content table.docutils th:first-child,
+.rst-content table.field-list td:first-child,
+.rst-content table.field-list th:first-child,
+.wy-table td:first-child,
+.wy-table th:first-child {
+    border-left-width: 1px;
+}

@@ -1,0 +1,46 @@
+name: Deploy Sphinx Docs
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "docs/**"
+      - "pyproject.toml"
+      - ".github/workflows/deploy-docs.yaml"
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Setup Python
+        run: uv python install 3.12
+
+      - name: Install Dependencies
+        run: |
+          uv sync --all-groups --no-progress
+
+      - name: Build Sphinx Documentation
+        run: |
+          cd docs
+          uv run ./build_docs.sh
+          uv run ./build_docs.sh en_US
+          mkdir -p ../public
+          mkdir -p ../public/en_US
+          cp -r build/html/* ../public/
+          cp -r build/html_en_US/* ../public/en_US/
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy public --project-name=resource-pack-server-docs --branch=main --commit-dirty=true

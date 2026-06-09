@@ -1,0 +1,16 @@
+[project]
+name = "resource-pack-server"
+version = "0.1.0"
+description = "A python based Minecraft resource pack server."
+readme = "README.md"
+authors = [
+    { name = "Mooling0602", email = "clemooling@outlook.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "mcdreforged>=2.0.0",
+]
+
+[project.scripts]
+resource-pack-server = "resource_pack_server.__main__:main"
+rps = "resource_pack_server.__main__:main"

@@ -1,0 +1,42 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ResourcePackServer 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-01 00:00+0000\n"
+"Last-Translator: Mooling0602 <clemooling@outlook.com>\n"
+"Language-Team: English\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "ResourcePackServer documentation"
+msgstr "ResourcePackServer documentation"
+
+msgid "ResourcePackServer is a Minecraft resource pack server. It supports both standalone HTTP mode and MCDReforged plugin mode."
+msgstr "ResourcePackServer is a Minecraft resource pack server. It supports both standalone HTTP mode and MCDReforged plugin mode."
+
+msgid "Home"
+msgstr "Home"
+
+msgid "Installation<contents/installation/index.rst>"
+msgstr "Installation<contents/installation/index.rst>"
+
+msgid "Usage<contents/usage/index.rst>"
+msgstr "Usage<contents/usage/index.rst>"
+
+msgid "Configuration<contents/config/index.rst>"
+msgstr "Configuration<contents/config/index.rst>"
+
+msgid "Commands<contents/commands/index.rst>"
+msgstr "Commands<contents/commands/index.rst>"
+
+msgid "Development<contents/development/index.rst>"
+msgstr "Development<contents/development/index.rst>"
+
+msgid "Acknowledgements<contents/thanks_to/index.rst>"
+msgstr "Acknowledgements<contents/thanks_to/index.rst>"
+
+msgid "Indices and tables"
+msgstr "Indices and tables"

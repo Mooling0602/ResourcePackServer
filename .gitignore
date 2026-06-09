@@ -1,0 +1,22 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Ruff
+.ruff_cache/
+
+# UV
+uv.lock
+
+# Local tooling
+.codegraph/
+.reasonix/
+reasonix.toml
+.directory

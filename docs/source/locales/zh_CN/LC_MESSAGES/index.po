@@ -1,0 +1,56 @@
+# Chinese (Simplified) translations for ResourcePackServer documentation.
+# Copyright (C) 2025 Mooling0602
+# This file is distributed under the same license as the ResourcePackServer project.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ResourcePackServer 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-01 00:00+0000\n"
+"Last-Translator: Mooling0602 <clemooling@outlook.com>\n"
+"Language-Team: Chinese (Simplified)\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: source/index.rst:2
+msgid "ResourcePackServer documentation"
+msgstr "ResourcePackServer 文档"
+
+#: source/index.rst:4
+msgid "ResourcePackServer is a Minecraft resource pack server. It supports both standalone HTTP mode and MCDReforged plugin mode."
+msgstr "ResourcePackServer 是一个 Minecraft 资源包服务器。它支持独立 HTTP 模式和 MCDReforged 插件模式。"
+
+#: source/index.rst:9
+msgid "Home"
+msgstr "主页"
+
+#: source/index.rst:11
+msgid "Installation<contents/installation/index.rst>"
+msgstr "安装指南<contents/installation/index.rst>"
+
+#: source/index.rst:12
+msgid "Usage<contents/usage/index.rst>"
+msgstr "使用指南<contents/usage/index.rst>"
+
+#: source/index.rst:13
+msgid "Configuration<contents/config/index.rst>"
+msgstr "配置说明<contents/config/index.rst>"
+
+#: source/index.rst:14
+msgid "Commands<contents/commands/index.rst>"
+msgstr "命令参考<contents/commands/index.rst>"
+
+#: source/index.rst:15
+msgid "Development<contents/development/index.rst>"
+msgstr "开发指南<contents/development/index.rst>"
+
+#: source/index.rst:16
+msgid "Acknowledgements<contents/thanks_to/index.rst>"
+msgstr "致谢<contents/thanks_to/index.rst>"
+
+#: source/index.rst:18
+msgid "Indices and tables"
+msgstr "索引和表格"
