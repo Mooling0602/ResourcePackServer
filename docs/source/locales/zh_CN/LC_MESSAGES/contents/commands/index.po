@@ -46,7 +46,7 @@ msgstr "权限"
 
 #: ../../source/contents/commands/index.rst:19
 msgid "Description"
-msgstr ""
+msgstr "描述"
 
 #: ../../source/contents/commands/index.rst:20
 msgid "``!!rps``"
@@ -54,7 +54,7 @@ msgstr ""
 
 #: ../../source/contents/commands/index.rst:30
 msgid "User"
-msgstr ""
+msgstr "用户"
 
 #: ../../source/contents/commands/index.rst:22
 msgid "Show plugin version and available subcommands"
@@ -90,7 +90,7 @@ msgstr ""
 
 #: ../../source/contents/commands/index.rst:36
 msgid "Admin"
-msgstr ""
+msgstr "管理员"
 
 #: ../../source/contents/commands/index.rst:34
 msgid "Force rebuild the merged pack (clears cache)"

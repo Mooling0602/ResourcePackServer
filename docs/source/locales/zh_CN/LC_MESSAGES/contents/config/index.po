@@ -57,11 +57,11 @@ msgstr "类型"
 
 #: ../../source/contents/config/index.rst:121
 msgid "Default"
-msgstr ""
+msgstr "默认值"
 
 #: ../../source/contents/config/index.rst:122
 msgid "Description"
-msgstr ""
+msgstr "描述"
 
 #: ../../source/contents/config/index.rst:123
 msgid "``enabled``"
@@ -89,7 +89,7 @@ msgstr ""
 
 #: ../../source/contents/config/index.rst:55
 msgid "Enable debug logging"
-msgstr ""
+msgstr "启用调试日志"
 
 #: ../../source/contents/config/index.rst:58
 msgid "Server Configuration"

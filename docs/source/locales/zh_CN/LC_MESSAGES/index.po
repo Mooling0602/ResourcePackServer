@@ -18,27 +18,27 @@ msgstr ""
 
 #: ../../source/index.rst:8
 msgid "Installation"
-msgstr ""
+msgstr "安装指南"
 
 #: ../../source/index.rst:8
 msgid "Usage"
-msgstr ""
+msgstr "使用说明"
 
 #: ../../source/index.rst:8
 msgid "Configuration"
-msgstr ""
+msgstr "配置"
 
 #: ../../source/index.rst:8
 msgid "Commands"
-msgstr ""
+msgstr "命令"
 
 #: ../../source/index.rst:8
 msgid "Development"
-msgstr ""
+msgstr "开发"
 
 #: ../../source/index.rst:8
 msgid "Acknowledgements"
-msgstr ""
+msgstr "致谢"
 
 #: ../../source/index.rst:8
 msgid "Home"

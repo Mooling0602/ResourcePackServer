@@ -1,20 +1,22 @@
 # Chinese (Simplified) translations for ResourcePackServer
 # Copyright (C) 2026, Mooling0602
-# This file is distributed under the same license as the ResourcePackServer package.
+# This file is distributed under the same license as the ResourcePackServer
+# package.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ResourcePackServer 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-09 00:00+0000\n"
+"POT-Creation-Date: 2026-06-09 19:25+0800\n"
 "PO-Revision-Date: 2026-06-09 00:00+0000\n"
 "Last-Translator: Mooling0602 <clemooling@outlook.com>\n"
-"Language-Team: Chinese (Simplified)\n"
 "Language: zh_CN\n"
+"Language-Team: Chinese (Simplified)\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
+"Generated-By: Babel 2.18.0\n"
 
 #: ../../source/contents/development/index.rst:2
 msgid "Development"
@@ -22,90 +24,93 @@ msgstr "开发指南"
 
 #: ../../source/contents/development/index.rst:4
 msgid ""
-"This page is for developers who want to contribute to ResourcePackServer or "
-"build their own tooling around it."
+"This page is for developers who want to contribute to ResourcePackServer "
+"or build their own tooling around it."
 msgstr "此页面面向希望为 ResourcePackServer 贡献代码或基于它构建工具链的开发者。"
 
 #: ../../source/contents/development/index.rst:7
 msgid "Project Structure"
 msgstr "项目结构"
 
-#: ../../source/contents/development/index.rst:33
+#: ../../source/contents/development/index.rst:35
 msgid "Architecture"
 msgstr "架构"
 
-#: ../../source/contents/development/index.rst:35
+#: ../../source/contents/development/index.rst:37
 msgid "**Dual-Mode Design**"
 msgstr "**双模式设计**"
 
-#: ../../source/contents/development/index.rst:37
-msgid ""
-"ResourcePackServer follows the same pattern as `PrimeBackup <https://github."
-"com/TISUnion/PrimeBackup>`__:"
-msgstr ""
-"ResourcePackServer 遵循与 `PrimeBackup <https://github.com/TISUnion/PrimeBackup"
-">`__ 相同的模式："
-
 #: ../../source/contents/development/index.rst:39
 msgid ""
-"**Environment detection**: ``ServerInterface.psi_opt()`` returns ``None`` → "
-"standalone mode"
-msgstr "**环境检测**：``ServerInterface.psi_opt()`` 返回 ``None`` → 独立模式"
-
-#: ../../source/contents/development/index.rst:40
-msgid ""
-"**Shared core**: ``server.py``, ``pack_merger.py``, ``config.py`` are mode-a"
-"gnostic"
-msgstr "**共享核心**：``server.py``、``pack_merger.py``、``config.py`` 与模式无关"
+"ResourcePackServer follows the same pattern as `PrimeBackup "
+"<https://github.com/TISUnion/PrimeBackup>`__:"
+msgstr ""
+"ResourcePackServer 遵循与 `PrimeBackup "
+"<https://github.com/TISUnion/PrimeBackup>`__ 相同的模式："
 
 #: ../../source/contents/development/index.rst:41
 msgid ""
-"**Dual entrypoints**: ``cli/cli_entrypoint.py`` for CLI, ``mcdr/mcdr_entrypo"
-"int.py`` for MCDR"
-msgstr "**双入口**：``cli/cli_entrypoint.py`` 用于 CLI，``mcdr/mcdr_entrypoint.py`` 用于 MCDR"
+"**Environment detection**: ``ServerInterface.psi_opt()`` returns ``None``"
+" → standalone mode"
+msgstr "**环境检测**：``ServerInterface.psi_opt()`` 返回 ``None`` → 独立模式"
 
 #: ../../source/contents/development/index.rst:42
 msgid ""
-"**Logger**: Detects MCDR environment and uses ``psi.logger`` or creates its "
-"own"
-msgstr "**日志器**：检测 MCDR 环境，使用 ``psi.logger`` 或自行创建"
+"**Shared core**: ``server.py``, ``pack_merger.py``, ``config.py`` are "
+"mode-agnostic"
+msgstr "**共享核心**：``server.py``、``pack_merger.py``、``config.py`` 与模式无关"
+
+#: ../../source/contents/development/index.rst:43
+msgid ""
+"**Dual entrypoints**: ``cli/cli_entrypoint.py`` for CLI, "
+"``mcdr/mcdr_entrypoint.py`` for MCDR"
+msgstr ""
+"**双入口**：``cli/cli_entrypoint.py`` 用于 CLI，``mcdr/mcdr_entrypoint.py`` 用于 "
+"MCDR"
 
 #: ../../source/contents/development/index.rst:44
+msgid ""
+"**Logger**: Detects MCDR environment and uses ``psi.logger`` or creates "
+"its own"
+msgstr "**日志器**：检测 MCDR 环境，使用 ``psi.logger`` 或自行创建"
+
+#: ../../source/contents/development/index.rst:46
 msgid "**Pack Merging**"
 msgstr "**资源包合并**"
 
-#: ../../source/contents/development/index.rst:46
+#: ../../source/contents/development/index.rst:48
 msgid "``pack_merger.py`` implements deterministic multi-pack merging:"
 msgstr "``pack_merger.py`` 实现了确定性的多包合并："
 
-#: ../../source/contents/development/index.rst:48
+#: ../../source/contents/development/index.rst:50
+#, python-brace-format
 msgid "Packs are read into memory as ``{filename: bytes}`` dicts"
 msgstr "资源包以 ``{filename: bytes}`` 字典形式读入内存"
 
-#: ../../source/contents/development/index.rst:49
+#: ../../source/contents/development/index.rst:51
 msgid "Merged from lowest to highest priority → higher priority overwrites"
 msgstr "从低优先级到高优先级合并 → 高优先级覆盖"
 
-#: ../../source/contents/development/index.rst:50
+#: ../../source/contents/development/index.rst:52
 msgid ""
-"``pack.mcmeta`` is special-cased: highest-priority metadata is the base; ``d"
-"escription`` fields from all packs are concatenated"
+"``pack.mcmeta`` is special-cased: highest-priority metadata is the base; "
+"``description`` fields from all packs are concatenated"
 msgstr "``pack.mcmeta`` 有特殊处理：最高优先级的元数据为基础；所有包的 ``description`` 字段被拼接"
 
-#: ../../source/contents/development/index.rst:51
+#: ../../source/contents/development/index.rst:53
 msgid "``pack.png`` is taken from the first pack that has one (highest priority)"
 msgstr "``pack.png`` 取自第一个拥有此文件的包（最高优先级）"
 
-#: ../../source/contents/development/index.rst:52
+#: ../../source/contents/development/index.rst:54
 msgid ""
-"Result is cached; cache is invalidated when any source pack's ``mtime`` chan"
-"ges"
+"Result is cached; cache is invalidated when any source pack's ``mtime`` "
+"changes"
 msgstr "结果被缓存；当任何源包的 ``mtime`` 更改时缓存失效"
 
-#: ../../source/contents/development/index.rst:55
+#: ../../source/contents/development/index.rst:57
 msgid "Building Docs"
 msgstr "构建文档"
 
-#: ../../source/contents/development/index.rst:77
-msgid "Running Tests"
-msgstr "运行测试"
+#~ msgid "Running Tests"
+#~ msgstr "运行测试"
+

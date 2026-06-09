@@ -7,20 +7,24 @@ You only need to choose **one** mode that fits your setup.
 
 ----
 
-Standalone Mode (pip install)
------------------------------
+Standalone Mode (install from source)
+--------------------------------------
 
-Install from source or PyPI (future):
+Clone the repository and install:
 
 .. code-block:: bash
 
-    pip install resource-pack-server
+    git clone https://github.com/Mooling0602/ResourcePackServer.git
+    cd ResourcePackServer
+    pip install .
 
 Or install with uv:
 
 .. code-block:: bash
 
-    uv add resource-pack-server
+    git clone https://github.com/Mooling0602/ResourcePackServer.git
+    cd ResourcePackServer
+    uv pip install .
 
 Then run:
 
@@ -35,15 +39,13 @@ See :doc:`/contents/usage/index` for more CLI options.
 MCDReforged Plugin Mode
 -----------------------
 
-1. Install the plugin via MCDR command:
+1. Clone the repository:
 
-.. code-block::
+.. code-block:: bash
 
-    !!MCDR plg install resource_pack_server --confirm
+    git clone https://github.com/Mooling0602/ResourcePackServer.git
 
-2. Alternatively, download the ``.mcdr`` package from
-   `GitHub Releases <https://github.com/Mooling0602/ResourcePackServer/releases>`__
-   and place it into the ``plugins/`` directory.
+2. Copy the ``src/resource_pack_server/`` folder into your MCDR ``plugins/`` directory.
 
 3. The plugin will auto-load. Use ``!!rps status`` to verify.
 
@@ -52,7 +54,7 @@ Dependencies
 
 This plugin depends on:
 
-* `MCDReforged <https://github.com/MCDReforged/MCDReforged>`__ >= 2.0.0
+* MCDReforged >= 2.0.0
 
 No other external dependencies are required (stdlib-only HTTP server).
 

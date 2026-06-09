@@ -11,22 +11,24 @@ Project Structure
     ResourcePackServer/
     ├── main.py                              # Root entry point
     ├── pyproject.toml                       # Project metadata & dependencies
-    ├── resource_pack_server/
-    │   ├── __init__.py
-    │   ├── __main__.py                      # python -m entry point
-    │   ├── server.py                        # HTTP server core (shared)
-    │   ├── config.py                        # Configuration classes
-    │   ├── logger.py                        # Dual-mode logger
-    │   ├── constants.py                     # Plugin constants
-    │   ├── hash_utils.py                    # SHA1 hashing utilities
-    │   ├── pack_merger.py                   # Multi-pack merge logic
-    │   ├── cli/
-    │   │   ├── __init__.py
-    │   │   └── cli_entrypoint.py            # Standalone CLI (argparse)
-    │   └── mcdr/
+    ├── src/
+    │   ├── mcdreforged.plugin.json          # MCDR plugin metadata
+    │   └── resource_pack_server/
     │       ├── __init__.py
-    │       ├── mcdr_globals.py              # MCDR global references
-    │       └── mcdr_entrypoint.py           # MCDR plugin hooks
+    │       ├── __main__.py                  # python -m entry point
+    │       ├── server.py                    # HTTP server core (shared)
+    │       ├── config.py                    # Configuration classes
+    │       ├── logger.py                    # Dual-mode logger
+    │       ├── constants.py                 # Plugin constants
+    │       ├── hash_utils.py                # SHA1 hashing utilities
+    │       ├── pack_merger.py               # Multi-pack merge logic
+    │       ├── cli/
+    │       │   ├── __init__.py
+    │       │   └── cli_entrypoint.py        # Standalone CLI (argparse)
+    │       └── mcdr/
+    │           ├── __init__.py
+    │           ├── mcdr_globals.py          # MCDR global references
+    │           └── mcdr_entrypoint.py       # MCDR plugin hooks
     └── docs/                                # Sphinx documentation
 
 Architecture
@@ -72,10 +74,3 @@ Building Docs
     # Extract/update translation strings
     make gettext
     sphinx-intl update -p build/gettext -l zh_CN -l en_US
-
-Running Tests
--------------
-
-.. code-block:: bash
-
-    pytest tests/
