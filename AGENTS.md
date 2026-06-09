@@ -4,7 +4,7 @@ Python-based Minecraft resource pack server. Supports standalone HTTP mode and M
 
 ## Project
 
-- Stack: Python 3.14+, mcdreforged>=2.0.0
+- Stack: Python 3.12+, mcdreforged>=2.0.0
 - Entry point: `main.py` → `resource_pack_server.__main__:main`
 - Author: Mooling0602
 - Manifest: `pyproject.toml`
@@ -31,7 +31,7 @@ Python-based Minecraft resource pack server. Supports standalone HTTP mode and M
 
 ## Conventions
 
-- Python 3.14+ required (`requires-python = ">=3.14"`)
+- Python 3.12+ required (`requires-python = ">=3.12"`)
 - Use `uv` for package management (lockfile gitignored)
 - Ruff intended for linting/formatting
 - Config uses mcdreforged `Serializable` class for both modes
