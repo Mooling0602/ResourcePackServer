@@ -3,8 +3,8 @@
     "version": "0.1.0",
     "name": "Resource Pack Server",
     "description": {
-        "en_us": "A Minecraft resource pack HTTP server with merge support, usable standalone or as an MCDReforged plugin",
-        "zh_cn": "支持合并的 Minecraft 资源包 HTTP 服务器，可独立运行或作为 MCDReforged 插件使用"
+        "en_us": "A Minecraft resource pack HTTP server with merge support, usable standalone or as an MCDReforged plugin.",
+        "zh_cn": "支持合并的 Minecraft 资源包 HTTP 服务器，可独立运行或作为 MCDReforged 插件使用。"
     },
     "author": "Mooling0602",
     "link": "https://github.com/Mooling0602/ResourcePackServer",
