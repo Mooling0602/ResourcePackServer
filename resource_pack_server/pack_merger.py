@@ -161,7 +161,7 @@ class PackMerger:
                 try:
                     with zipfile.ZipFile(p, "r") as zf:
                         manifests.append(_read_zip_manifest(zf))
-                except Exception as e:
+                except (zipfile.BadZipFile, OSError, KeyError) as e:
                     self.logger.warning(f"Skipping {p.name}: {e}")
                     continue
 

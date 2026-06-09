@@ -28,6 +28,6 @@ def get() -> logging.Logger:
         psi = ServerInterface.psi_opt()
         if psi is not None:
             return psi.logger
-    except Exception:
+    except (ImportError, AttributeError):
         pass
     return _create_logger()

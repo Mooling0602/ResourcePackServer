@@ -1,5 +1,6 @@
 """MCDReforged plugin hooks — on_load / on_unload / commands."""
 
+import zipfile
 from typing import Any
 
 from mcdreforged.api.all import (
@@ -38,7 +39,7 @@ def on_load(server: PluginServerInterface, old):
             target_class=RpsConfig,
             failure_policy="raise",
         )
-    except Exception:
+    except (OSError, ValueError, TypeError):
         config = RpsConfig.get_default()
         server.save_config_simple(config)
         logger.info("Created default config file")
@@ -70,7 +71,7 @@ def on_load(server: PluginServerInterface, old):
                 _reply(source, "\n".join(lines))
             else:
                 _reply(source, "No resource packs found.")
-        except Exception as e:
+        except (OSError, ValueError) as e:
             _reply(source, f"Error listing packs: {e}")
 
     def _cmd_reload(source: CommandSource):
@@ -95,7 +96,7 @@ def on_load(server: PluginServerInterface, old):
                         lines.append(
                             f"Priority: {', '.join(_config.merge.pack_priority)}"
                         )
-                except Exception as e:
+                except (OSError, zipfile.BadZipFile, ValueError) as e:
                     lines.append(f"Merge error: {e}")
             else:
                 lines.append("Merge: disabled")
@@ -111,7 +112,7 @@ def on_load(server: PluginServerInterface, old):
             data, sha1 = _http_server.merger.build(force=True)
             size_mb = len(data) / (1024 * 1024)
             _reply(source, f"Merged pack rebuilt: {size_mb:.1f} MB, SHA1={sha1}")
-        except Exception as e:
+        except (OSError, zipfile.BadZipFile, ValueError) as e:
             _reply(source, f"Merge rebuild failed: {e}")
 
     def _cmd_help(source: CommandSource):

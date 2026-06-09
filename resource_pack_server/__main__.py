@@ -9,7 +9,7 @@ def main():
             from resource_pack_server.mcdr.mcdr_entrypoint import on_load
             on_load(psi, None)
             return
-    except Exception:
+    except (ImportError, AttributeError):
         pass
 
     # Standalone mode

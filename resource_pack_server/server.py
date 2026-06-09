@@ -1,6 +1,7 @@
 """Shared HTTP server core — usable from both CLI and MCDR modes."""
 
 import threading
+import zipfile
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from pathlib import Path
 from urllib.parse import urlparse
@@ -63,7 +64,7 @@ class ResourcePackHandler(BaseHTTPRequestHandler):
     def _serve_merged(self) -> None:
         try:
             data, sha1 = self.merger.build()
-        except Exception as e:
+        except (OSError, zipfile.BadZipFile, ValueError) as e:
             self.send_error(500, f"Merge failed: {e}")
             return
         self._send_zip(data, "merged.zip", sha1)
@@ -83,7 +84,7 @@ class ResourcePackHandler(BaseHTTPRequestHandler):
                 f"<td><code>{sha1}</code></td>"
                 "</tr>"
             )
-        except Exception:
+        except (OSError, zipfile.BadZipFile, ValueError):
             rows.append(
                 '<tr><td colspan="3">Merge unavailable</td></tr>'
             )
