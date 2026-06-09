@@ -35,11 +35,11 @@ class RpsConfig(Serializable):
 
     @classmethod
     @functools.lru_cache
-    def __get_default_instance(cls) -> RpsConfig:
+    def __get_default_instance(cls) -> "RpsConfig":
         return RpsConfig.get_default()
 
     @classmethod
-    def get(cls) -> RpsConfig:
+    def get(cls) -> "RpsConfig":
         if _config is not None:
             return _config
         return cls.__get_default_instance()

@@ -1,25 +1,27 @@
 """MCDReforged plugin hooks — on_load / on_unload / commands."""
 
+from typing import Any
+
 from mcdreforged.api.all import (
-    PluginServerInterface,
     CommandSource,
-    RTextBase,
-    RText,
-    RColor,
     Literal,
+    PluginServerInterface,
+    RColor,
+    RText,
+    RTextBase,
 )
 
-from resource_pack_server.config import RpsConfig, set_config_instance
-from resource_pack_server.server import ResourcePackHttpServer
-from resource_pack_server.logger import get as get_logger
 from resource_pack_server import constants
+from resource_pack_server.config import RpsConfig, set_config_instance
+from resource_pack_server.logger import get as get_logger
+from resource_pack_server.server import ResourcePackHttpServer
 
 _http_server: ResourcePackHttpServer | None = None
 _config: RpsConfig | None = None
 
 
 def _reply(source: CommandSource, msg: str | RTextBase) -> None:
-    prefix = RText(f"[RPS] ", RColor.gold)
+    prefix = RText("[RPS] ", RColor.gold)
     if isinstance(msg, str):
         msg = RText(msg)
     source.reply(RTextBase.join("", [prefix, msg]))
@@ -32,15 +34,17 @@ def on_load(server: PluginServerInterface, old):
     logger = get_logger()
 
     try:
-        _config = server.load_config_simple(
+        config = server.load_config_simple(
             target_class=RpsConfig,
             failure_policy="raise",
         )
     except Exception:
-        _config = RpsConfig.get_default()
-        server.save_config_simple(_config)
+        config = RpsConfig.get_default()
+        server.save_config_simple(config)
         logger.info("Created default config file")
 
+    assert isinstance(config, RpsConfig)
+    _config = config
     set_config_instance(_config)
 
     if not _config.enabled:
@@ -52,7 +56,7 @@ def on_load(server: PluginServerInterface, old):
 
     def _cmd_list(source: CommandSource):
         try:
-            packs = []
+            packs: list[dict[str, Any]] = []
             for entry in sorted(_config.pack_path.iterdir()):
                 if entry.is_file() and entry.suffix.lower() == ".zip":
                     from resource_pack_server.hash_utils import sha1_file

@@ -18,8 +18,8 @@ class ResourcePackHandler(BaseHTTPRequestHandler):
     public_url: str
     merger: PackMerger
 
-    def log_message(self, fmt: str, *args) -> None:
-        get_logger().info(fmt % args)
+    def log_message(self, format: str, *args) -> None:
+        get_logger().info(format % args)
 
     def _send_zip(self, data: bytes, name: str, sha1: str) -> None:
         self.send_response(200)
