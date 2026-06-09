@@ -79,8 +79,8 @@ msgid "This plugin depends on:"
 msgstr "此插件依赖："
 
 #: ../../source/contents/installation/index.rst:57
-msgid "MCDReforged >= 2.0.0"
-msgstr "MCDReforged >= 2.0.0"
+msgid "MCDReforged >= 2.14.1"
+msgstr "MCDReforged >= 2.14.1"
 
 #: ../../source/contents/installation/index.rst:59
 msgid "No other external dependencies are required (stdlib-only HTTP server)."

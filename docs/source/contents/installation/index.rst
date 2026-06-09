@@ -54,7 +54,7 @@ Dependencies
 
 This plugin depends on:
 
-* MCDReforged >= 2.0.0
+* MCDReforged >= 2.14.1
 
 No other external dependencies are required (stdlib-only HTTP server).
 
