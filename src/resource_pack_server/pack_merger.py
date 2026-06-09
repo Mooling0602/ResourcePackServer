@@ -14,6 +14,7 @@ import json
 import threading
 import zipfile
 from pathlib import Path
+
 from resource_pack_server.config import RpsConfig
 from resource_pack_server.hash_utils import sha1_hex
 from resource_pack_server.logger import get as get_logger
@@ -117,9 +118,7 @@ class PackMerger:
             if mtime != self._cache_mtimes[p.name]:
                 return True
         # Also check if packs were added/removed
-        if set(self._cache_mtimes.keys()) != {p.name for p in packs}:
-            return True
-        return False
+        return set(self._cache_mtimes.keys()) != {p.name for p in packs}
 
     def build(self, force: bool = False) -> tuple[bytes, str]:
         """Return (merged_zip_bytes, sha1_hex). Cached unless force=True

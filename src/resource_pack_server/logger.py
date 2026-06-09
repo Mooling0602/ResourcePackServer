@@ -2,7 +2,6 @@ import functools
 import logging
 import sys
 
-
 LOG_FORMATTER = logging.Formatter(
     "[%(name)s] [%(asctime)s] [%(levelname)s] %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",

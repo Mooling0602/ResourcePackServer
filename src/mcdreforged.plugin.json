@@ -9,7 +9,7 @@
     "author": "Mooling0602",
     "link": "https://github.com/Mooling0602/ResourcePackServer",
     "dependencies": {
-        "mcdreforged": ">=2.0.0"
+        "mcdreforged": ">=2.14.1"
     },
     "entrypoint": "mcdr.mcdr_entrypoint"
 }
