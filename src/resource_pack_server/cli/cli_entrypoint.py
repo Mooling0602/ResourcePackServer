@@ -18,19 +18,25 @@ def cli_entry() -> None:
     parser.add_argument("--host", default="0.0.0.0", help="Bind address")
     parser.add_argument("--port", type=int, default=8080, help="Bind port")
     parser.add_argument(
-        "--pack-dir", default="./resource_packs",
+        "--pack-dir",
+        default="./resource_packs",
         help="Directory containing .zip resource packs",
     )
     parser.add_argument(
-        "--public-url", default="",
+        "--public-url",
+        default="",
         help="Public URL prefix",
     )
     parser.add_argument(
-        "--merge/--no-merge", default=True, dest="merge",
+        "--merge/--no-merge",
+        default=True,
+        dest="merge",
         help="Enable/disable merged pack (default: enabled)",
     )
     parser.add_argument(
-        "--priority", nargs="*", default=[],
+        "--priority",
+        nargs="*",
+        default=[],
         metavar="PACK.zip",
         help="Pack priority order for merging (highest first)",
     )
@@ -46,6 +52,7 @@ def cli_entry() -> None:
     logger = get_logger()
     if args.debug:
         import logging
+
         logger.setLevel(logging.DEBUG)
 
     config = RpsConfig.get_default()
@@ -79,5 +86,6 @@ def cli_entry() -> None:
         signal.pause()
     except AttributeError:
         import time
+
         while server.is_running:
             time.sleep(1)

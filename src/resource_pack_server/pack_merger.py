@@ -23,8 +23,7 @@ from resource_pack_server.logger import get as get_logger
 def _list_packs(pack_dir: Path) -> list[Path]:
     """Return sorted list of .zip pack files in pack_dir."""
     packs = sorted(
-        p for p in pack_dir.iterdir()
-        if p.is_file() and p.suffix.lower() == ".zip"
+        p for p in pack_dir.iterdir() if p.is_file() and p.suffix.lower() == ".zip"
     )
     return packs
 
@@ -130,12 +129,15 @@ class PackMerger:
             # No packs — return minimal valid zip
             buf = io.BytesIO()
             with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zf:
-                meta = json.dumps({
-                    "pack": {
-                        "pack_format": 15,
-                        "description": "No packs loaded",
-                    }
-                }, indent=2).encode("utf-8")
+                meta = json.dumps(
+                    {
+                        "pack": {
+                            "pack_format": 15,
+                            "description": "No packs loaded",
+                        }
+                    },
+                    indent=2,
+                ).encode("utf-8")
                 zf.writestr("pack.mcmeta", meta)
             data = buf.getvalue()
             return data, sha1_hex(data)
@@ -200,7 +202,7 @@ class PackMerger:
             self._cache = (data, sha1)
 
             self.logger.info(
-                f"Merged pack built: {len(data) / (1024*1024):.1f} MB, SHA1={sha1}"
+                f"Merged pack built: {len(data) / (1024 * 1024):.1f} MB, SHA1={sha1}"
             )
             return data, sha1
 

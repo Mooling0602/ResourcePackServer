@@ -30,6 +30,7 @@ def _reply(source: CommandSource, msg: str | RTextBase) -> None:
 
 # --- MCDR Hooks ---
 
+
 def on_load(server: PluginServerInterface, old):
     global _config, _http_server
     logger = get_logger()
@@ -61,13 +62,18 @@ def on_load(server: PluginServerInterface, old):
             for entry in sorted(_config.pack_path.iterdir()):
                 if entry.is_file() and entry.suffix.lower() == ".zip":
                     from resource_pack_server.hash_utils import sha1_file
-                    packs.append({
-                        "name": entry.name,
-                        "size_mb": round(entry.stat().st_size / (1024 * 1024), 1),
-                        "sha1": sha1_file(entry),
-                    })
+
+                    packs.append(
+                        {
+                            "name": entry.name,
+                            "size_mb": round(entry.stat().st_size / (1024 * 1024), 1),
+                            "sha1": sha1_file(entry),
+                        }
+                    )
             if packs:
-                lines = [f"{p['name']} ({p['size_mb']} MB, {p['sha1'][:8]}…)" for p in packs]
+                lines = [
+                    f"{p['name']} ({p['size_mb']} MB, {p['sha1'][:8]}…)" for p in packs
+                ]
                 _reply(source, "\n".join(lines))
             else:
                 _reply(source, "No resource packs found.")
@@ -89,9 +95,7 @@ def on_load(server: PluginServerInterface, old):
                 try:
                     data, sha1 = _http_server.merger.build()
                     size_mb = len(data) / (1024 * 1024)
-                    lines.append(
-                        f"Merged pack: {size_mb:.1f} MB, SHA1={sha1}"
-                    )
+                    lines.append(f"Merged pack: {size_mb:.1f} MB, SHA1={sha1}")
                     if _config.merge.pack_priority:
                         lines.append(
                             f"Priority: {', '.join(_config.merge.pack_priority)}"
@@ -127,15 +131,17 @@ def on_load(server: PluginServerInterface, old):
 
     server.register_command(
         Literal(prefix)
-        .runs(lambda src: _reply(src, f"ResourcePackServer v{constants.PLUGIN_VERSION}. Use {prefix} help"))
+        .runs(
+            lambda src: _reply(
+                src,
+                f"ResourcePackServer v{constants.PLUGIN_VERSION}. Use {prefix} help",
+            )
+        )
         .then(Literal("list").runs(_cmd_list))
         .then(Literal("reload").runs(_cmd_reload))
         .then(Literal("status").runs(_cmd_status))
         .then(Literal("help").runs(_cmd_help))
-        .then(
-            Literal("merge")
-            .then(Literal("rebuild").runs(_cmd_merge_rebuild))
-        )
+        .then(Literal("merge").then(Literal("rebuild").runs(_cmd_merge_rebuild)))
     )
 
     server.register_help_message(

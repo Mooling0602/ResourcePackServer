@@ -79,15 +79,13 @@ class ResourcePackHandler(BaseHTTPRequestHandler):
             rows.append(
                 '<tr style="background:#e8f5e9">'
                 '<td><b><a href="/merged.zip">merged.zip</a></b> '
-                '<small>(all packs combined)</small></td>'
+                "<small>(all packs combined)</small></td>"
                 f"<td>{size_mb:.1f} MB</td>"
                 f"<td><code>{sha1}</code></td>"
                 "</tr>"
             )
         except (OSError, zipfile.BadZipFile, ValueError):
-            rows.append(
-                '<tr><td colspan="3">Merge unavailable</td></tr>'
-            )
+            rows.append('<tr><td colspan="3">Merge unavailable</td></tr>')
 
         # Individual packs
         try:

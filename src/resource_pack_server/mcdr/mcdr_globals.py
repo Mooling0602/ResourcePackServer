@@ -20,6 +20,7 @@ def _init() -> None:
     else:
         import os
         import warnings
+
         warnings.warn(
             f"Loading {os.path.basename(__file__)} outside MCDR environment",
             stacklevel=3,

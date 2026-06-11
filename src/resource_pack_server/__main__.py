@@ -7,6 +7,7 @@ def main():
         if psi is not None:
             # Running inside MCDR — delegate to MCDR entrypoint
             from resource_pack_server.mcdr.mcdr_entrypoint import on_load
+
             on_load(psi, None)
             return
     except (ImportError, AttributeError):
