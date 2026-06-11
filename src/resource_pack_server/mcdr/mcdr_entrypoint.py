@@ -14,6 +14,7 @@ from mcdreforged.api.all import (
 
 from resource_pack_server import constants
 from resource_pack_server.config import RpsConfig, set_config_instance
+from resource_pack_server.hash_utils import sha1_file
 from resource_pack_server.logger import get as get_logger
 from resource_pack_server.server import ResourcePackHttpServer
 
@@ -61,8 +62,6 @@ def on_load(server: PluginServerInterface, old):
             packs: list[dict[str, Any]] = []
             for entry in sorted(_config.pack_path.iterdir()):
                 if entry.is_file() and entry.suffix.lower() == ".zip":
-                    from resource_pack_server.hash_utils import sha1_file
-
                     packs.append(
                         {
                             "name": entry.name,

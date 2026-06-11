@@ -6,6 +6,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
 from urllib.parse import urlparse
 
+from resource_pack_server import constants
 from resource_pack_server.config import RpsConfig
 from resource_pack_server.hash_utils import sha1_file
 from resource_pack_server.logger import get as get_logger
@@ -18,6 +19,7 @@ class ResourcePackHandler(BaseHTTPRequestHandler):
     pack_dir: Path
     public_url: str
     merger: PackMerger
+    _sha1_cache: dict[str, tuple[float, str]] = {}  # path -> (mtime, sha1)
 
     def log_message(self, format: str, *args) -> None:
         get_logger().info(format % args)
@@ -39,7 +41,7 @@ class ResourcePackHandler(BaseHTTPRequestHandler):
 <body>
 <h1>{title}</h1>
 {body}
-<p><em>ResourcePackServer v0.1.0</em></p>
+<p><em>ResourcePackServer v{constants.PLUGIN_VERSION}</em></p>
 </body>
 </html>"""
         encoded = html.encode("utf-8")
@@ -69,6 +71,17 @@ class ResourcePackHandler(BaseHTTPRequestHandler):
             return
         self._send_zip(data, "merged.zip", sha1)
 
+    @classmethod
+    def _cached_sha1(cls, path: Path) -> str:
+        key = str(path)
+        mtime = path.stat().st_mtime
+        cached = cls._sha1_cache.get(key)
+        if cached and cached[0] == mtime:
+            return cached[1]
+        sha1 = sha1_file(path)
+        cls._sha1_cache[key] = (mtime, sha1)
+        return sha1
+
     def _list_packs(self) -> None:
         rows: list[str] = []
 
@@ -91,7 +104,7 @@ class ResourcePackHandler(BaseHTTPRequestHandler):
         try:
             for entry in sorted(self.pack_dir.iterdir()):
                 if entry.is_file() and entry.suffix.lower() == ".zip":
-                    sha1 = sha1_file(entry)
+                    sha1 = self._cached_sha1(entry)
                     size = entry.stat().st_size
                     size_mb = size / (1024 * 1024)
                     url = f"/{entry.name}"
