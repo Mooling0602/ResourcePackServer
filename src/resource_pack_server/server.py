@@ -153,7 +153,7 @@ class ResourcePackHandler(BaseHTTPRequestHandler):
             self.send_error(400, "Bad Request")
             return
         file_path = (self.pack_dir / safe_name).resolve()
-        if not str(file_path).startswith(str(self.pack_dir.resolve())):
+        if not file_path.is_relative_to(self.pack_dir.resolve()):
             self.send_error(400, "Bad Request")
             return
         if not file_path.is_file():
