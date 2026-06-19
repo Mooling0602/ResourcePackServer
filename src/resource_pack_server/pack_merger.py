@@ -75,8 +75,11 @@ def _merge_pack_mcmeta(manifests: list[dict[str, bytes]]) -> bytes:
     if base is None:
         base = {
             "pack": {
-                "pack_format": 15,  # 1.21 default
+                "pack_format": 9999,
                 "description": "Merged Resource Pack",
+                "supported_formats": [0, 9999],
+                "min_format": 0,
+                "max_format": 9999,
             }
         }
 
@@ -132,8 +135,11 @@ class PackMerger:
                 meta = json.dumps(
                     {
                         "pack": {
-                            "pack_format": 15,
+                            "pack_format": 9999,
                             "description": "No packs loaded",
+                            "supported_formats": [0, 9999],
+                            "min_format": 0,
+                            "max_format": 9999,
                         }
                     },
                     indent=2,
@@ -167,7 +173,23 @@ class PackMerger:
                     continue
 
             if not manifests:
-                data = b""
+                self.logger.warning("All packs failed to read, returning empty pack")
+                buf = io.BytesIO()
+                with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zf:
+                    meta = json.dumps(
+                        {
+                            "pack": {
+                                "pack_format": 9999,
+                                "description": "No valid packs",
+                                "supported_formats": [0, 9999],
+                                "min_format": 0,
+                                "max_format": 9999,
+                            }
+                        },
+                        indent=2,
+                    ).encode("utf-8")
+                    zf.writestr("pack.mcmeta", meta)
+                data = buf.getvalue()
                 sha1 = sha1_hex(data)
                 self._cache = (data, sha1)
                 self._cache_mtimes = {}

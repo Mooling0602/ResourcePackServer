@@ -2,10 +2,14 @@
 
 import argparse
 import signal
-import sys
 
 from resource_pack_server.config import RpsConfig, set_config_instance
-from resource_pack_server.constants import PLUGIN_VERSION
+from resource_pack_server.constants import (
+    DEFAULT_HOST,
+    DEFAULT_PACK_DIR,
+    DEFAULT_PORT,
+    PLUGIN_VERSION,
+)
 from resource_pack_server.logger import get as get_logger
 from resource_pack_server.server import ResourcePackHttpServer
 
@@ -15,11 +19,11 @@ def cli_entry() -> None:
         description=f"Resource Pack Server v{PLUGIN_VERSION}",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
-    parser.add_argument("--host", default="0.0.0.0", help="Bind address")
-    parser.add_argument("--port", type=int, default=8080, help="Bind port")
+    parser.add_argument("--host", default=DEFAULT_HOST, help="Bind address")
+    parser.add_argument("--port", type=int, default=DEFAULT_PORT, help="Bind port")
     parser.add_argument(
         "--pack-dir",
-        default="./resource_packs",
+        default=DEFAULT_PACK_DIR,
         help="Directory containing .zip resource packs",
     )
     parser.add_argument(
@@ -70,7 +74,6 @@ def cli_entry() -> None:
     def _shutdown(signum, frame):
         logger.info("Received signal, shutting down...")
         server.stop()
-        sys.exit(0)
 
     signal.signal(signal.SIGINT, _shutdown)
     signal.signal(signal.SIGTERM, _shutdown)

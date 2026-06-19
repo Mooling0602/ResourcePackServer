@@ -1,11 +1,12 @@
 """Shared HTTP server core — usable from both CLI and MCDR modes."""
 
+import html
 import threading
 import zipfile
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
 from typing import ClassVar
-from urllib.parse import urlparse
+from urllib.parse import quote, urlparse
 
 from resource_pack_server import constants
 from resource_pack_server.config import RpsConfig
@@ -35,17 +36,32 @@ class ResourcePackHandler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(data)
 
+    def _send_zip_streaming(
+        self, file_path: Path, name: str, sha1: str, size: int
+    ) -> None:
+        self.send_response(200)
+        self.send_header("Content-Type", "application/zip")
+        self.send_header("Content-Length", str(size))
+        self.send_header("Content-Disposition", f'attachment; filename="{name}"')
+        self.send_header("X-Resource-Pack-SHA1", sha1)
+        self.send_header("Cache-Control", "public, max-age=3600")
+        self.end_headers()
+        with open(file_path, "rb") as f:
+            for chunk in iter(lambda: f.read(65536), b""):
+                self.wfile.write(chunk)
+
     def _send_html(self, title: str, body: str) -> None:
-        html = f"""<!DOCTYPE html>
+        safe_title = html.escape(title)
+        page = f"""<!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><title>{title}</title></head>
+<head><meta charset="utf-8"><title>{safe_title}</title></head>
 <body>
-<h1>{title}</h1>
+<h1>{safe_title}</h1>
 {body}
 <p><em>ResourcePackServer v{constants.PLUGIN_VERSION}</em></p>
 </body>
 </html>"""
-        encoded = html.encode("utf-8")
+        encoded = page.encode("utf-8")
         self.send_response(200)
         self.send_header("Content-Type", "text/html; charset=utf-8")
         self.send_header("Content-Length", str(len(encoded)))
@@ -108,9 +124,11 @@ class ResourcePackHandler(BaseHTTPRequestHandler):
                     sha1 = self._cached_sha1(entry)
                     size = entry.stat().st_size
                     size_mb = size / (1024 * 1024)
-                    url = f"/{entry.name}"
+                    safe_name = html.escape(entry.name)
+                    raw_url = "/" + quote(entry.name, safe="")
+                    url = html.escape(raw_url, quote=True)
                     rows.append(
-                        f'<tr><td><a href="{url}">{entry.name}</a></td>'
+                        f'<tr><td><a href="{url}">{safe_name}</a></td>'
                         f"<td>{size_mb:.1f} MB</td>"
                         f"<td><code>{sha1}</code></td></tr>"
                     )
@@ -131,16 +149,19 @@ class ResourcePackHandler(BaseHTTPRequestHandler):
 
     def _serve_pack(self, path: str) -> None:
         safe_name = Path(path).name
-        if safe_name != path or ".." in path:
+        if safe_name != path:
             self.send_error(400, "Bad Request")
             return
-        file_path = self.pack_dir / safe_name
+        file_path = (self.pack_dir / safe_name).resolve()
+        if not str(file_path).startswith(str(self.pack_dir.resolve())):
+            self.send_error(400, "Bad Request")
+            return
         if not file_path.is_file():
             self.send_error(404, "Pack not found")
             return
-        data = file_path.read_bytes()
-        sha1 = sha1_file(file_path)
-        self._send_zip(data, safe_name, sha1)
+        sha1 = self._cached_sha1(file_path)
+        size = file_path.stat().st_size
+        self._send_zip_streaming(file_path, safe_name, sha1, size)
 
 
 def _handler_factory(
@@ -193,8 +214,9 @@ class ResourcePackHttpServer:
         if self._httpd is not None:
             self.logger.info("Shutting down resource pack server...")
             self._httpd.shutdown()
-            self._httpd.server_close()
-            self._httpd = None
         if self._thread is not None:
             self._thread.join(timeout=5)
             self._thread = None
+        if self._httpd is not None:
+            self._httpd.server_close()
+            self._httpd = None

@@ -10,7 +10,7 @@ def main():
 
             on_load(psi, None)
             return
-    except (ImportError, AttributeError):
+    except ImportError:
         pass
 
     # Standalone mode

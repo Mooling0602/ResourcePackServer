@@ -38,7 +38,7 @@ path = "src/mcdreforged.plugin.json"
 pattern = "\"version\"\\s*:\\s*\"(?P<version>[^\"]+)\""
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/resource-pack-server"]
+packages = ["src/resource_pack_server"]
 
 [project.scripts]
 resource-pack-server = "resource_pack_server.__main__:main"

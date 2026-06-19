@@ -9,19 +9,24 @@ STEPS = [
 ]
 
 
-def run(name: str, cmd: list[str]) -> None:
+def run(name: str, cmd: list[str]) -> int:
     print(f"----- {name} -----")
     if shutil.which(cmd[0]) is None:
         print(
             f"'{cmd[0]}' not found. Please install with `uv sync` or your package manager."
         )
-        return
-    subprocess.run(cmd, check=False)
+        return 0
+    result = subprocess.run(cmd, check=False)
+    return result.returncode
 
 
 def main() -> None:
+    failures = 0
     for name, cmd in STEPS:
-        run(name, cmd)
+        if run(name, cmd) != 0:
+            failures += 1
+    if failures:
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":

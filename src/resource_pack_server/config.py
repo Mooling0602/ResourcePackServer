@@ -1,4 +1,5 @@
 import functools
+import threading
 from pathlib import Path
 
 from mcdreforged.api.all import Serializable
@@ -40,8 +41,9 @@ class RpsConfig(Serializable):
 
     @classmethod
     def get(cls) -> "RpsConfig":
-        if _config is not None:
-            return _config
+        with _config_lock:
+            if _config is not None:
+                return _config
         return cls.__get_default_instance()
 
     # --- Derived paths ---
@@ -52,8 +54,10 @@ class RpsConfig(Serializable):
 
 
 _config: RpsConfig | None = None
+_config_lock = threading.Lock()
 
 
 def set_config_instance(cfg: RpsConfig) -> None:
     global _config
-    _config = cfg
+    with _config_lock:
+        _config = cfg
