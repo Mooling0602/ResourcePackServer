@@ -23,10 +23,12 @@ Python-based Minecraft resource pack server. Supports standalone HTTP mode and M
 - `main.py` — root entry, delegates to `resource_pack_server.__main__`
 - `resource_pack_server/__main__.py` — detects MCDR vs standalone, routes to correct entrypoint
 - `resource_pack_server/server.py` — HTTP server core (shared by both modes), serves .zip packs
-- `resource_pack_server/config.py` — `RpsConfig` (Serializable), `ServerConfig`, `CommandConfig`
+- `resource_pack_server/config.py` — `RpsConfig` (Serializable), `ServerConfig`, `CommandConfig`, `MergeConfig`
 - `resource_pack_server/cli/cli_entrypoint.py` — standalone argparse CLI with signal handling
 - `resource_pack_server/mcdr/mcdr_entrypoint.py` — MCDR plugin hooks (`on_load`/`on_unload`), `!!rps` commands
+- `resource_pack_server/pack_merger.py` — merge multiple .zip packs with priority ordering
 - `resource_pack_server/hash_utils.py` — SHA1 hashing for pack identification
+- `resource_pack_server/constants.py` — plugin ID, version, default values
 - `resource_pack_server/logger.py` — dual-mode logger (MCDR logger vs stdlib)
 
 ## Conventions

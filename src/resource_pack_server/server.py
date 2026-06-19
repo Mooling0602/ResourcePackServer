@@ -4,6 +4,7 @@ import threading
 import zipfile
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
+from typing import ClassVar
 from urllib.parse import urlparse
 
 from resource_pack_server import constants
@@ -19,7 +20,7 @@ class ResourcePackHandler(BaseHTTPRequestHandler):
     pack_dir: Path
     public_url: str
     merger: PackMerger
-    _sha1_cache: dict[str, tuple[float, str]] = {}  # path -> (mtime, sha1)
+    _sha1_cache: ClassVar[dict[str, tuple[float, str]]] = {}  # path -> (mtime, sha1)
 
     def log_message(self, format: str, *args) -> None:
         get_logger().info(format % args)
