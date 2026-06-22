@@ -20,3 +20,6 @@ uv.lock
 .reasonix/
 reasonix.toml
 .directory
+
+# Local testing
+resource_packs/

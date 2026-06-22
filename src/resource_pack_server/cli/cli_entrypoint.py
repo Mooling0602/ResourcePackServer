@@ -2,13 +2,14 @@
 
 import argparse
 import signal
+import threading
 
+from resource_pack_server import __version__
 from resource_pack_server.config import RpsConfig, set_config_instance
 from resource_pack_server.constants import (
     DEFAULT_HOST,
     DEFAULT_PACK_DIR,
     DEFAULT_PORT,
-    PLUGIN_VERSION,
 )
 from resource_pack_server.logger import get as get_logger
 from resource_pack_server.server import ResourcePackHttpServer
@@ -16,7 +17,7 @@ from resource_pack_server.server import ResourcePackHttpServer
 
 def cli_entry() -> None:
     parser = argparse.ArgumentParser(
-        description=f"Resource Pack Server v{PLUGIN_VERSION}",
+        description=f"Resource Pack Server v{__version__}",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument("--host", default=DEFAULT_HOST, help="Bind address")
@@ -50,7 +51,7 @@ def cli_entry() -> None:
     args = parser.parse_args()
 
     if args.version:
-        print(f"Resource Pack Server v{PLUGIN_VERSION}")
+        print(f"Resource Pack Server v{__version__}")
         return
 
     logger = get_logger()
@@ -70,10 +71,11 @@ def cli_entry() -> None:
     set_config_instance(config)
 
     server = ResourcePackHttpServer(config)
+    shutdown_event = threading.Event()
 
     def _shutdown(signum, frame):
         logger.info("Received signal, shutting down...")
-        server.stop()
+        shutdown_event.set()
 
     signal.signal(signal.SIGINT, _shutdown)
     signal.signal(signal.SIGTERM, _shutdown)
@@ -85,10 +87,5 @@ def cli_entry() -> None:
         + (" Merged pack at /merged.zip." if args.merge else "")
     )
 
-    try:
-        signal.pause()
-    except AttributeError:
-        import time
-
-        while server.is_running:
-            time.sleep(1)
+    shutdown_event.wait()
+    server.stop()

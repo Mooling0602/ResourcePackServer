@@ -2,6 +2,8 @@
 
 A python based Minecraft resource pack server, also supports running in MCDReforged.
 
+**English** | **[中文](README_zh_CN.md)**
+
 ## Documentation
 
 📖 **[https://docs.staringplanet.top/resource-pack-server](https://docs.staringplanet.top/resource-pack-server)**

@@ -12,7 +12,7 @@ from mcdreforged.api.all import (
     RTextBase,
 )
 
-from resource_pack_server import constants
+from resource_pack_server import __version__, constants
 from resource_pack_server.config import RpsConfig, set_config_instance
 from resource_pack_server.hash_utils import sha1_file
 from resource_pack_server.logger import get as get_logger
@@ -133,7 +133,7 @@ def on_load(server: PluginServerInterface, old):
         .runs(
             lambda src: _reply(
                 src,
-                f"ResourcePackServer v{constants.PLUGIN_VERSION}. Use {prefix} help",
+                f"ResourcePackServer v{__version__}. Use {prefix} help",
             )
         )
         .then(Literal("list").runs(_cmd_list))

@@ -3,12 +3,12 @@
 import html
 import threading
 import zipfile
-from http.server import BaseHTTPRequestHandler, HTTPServer
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import ClassVar
 from urllib.parse import quote, urlparse
 
-from resource_pack_server import constants
+from resource_pack_server import __version__
 from resource_pack_server.config import RpsConfig
 from resource_pack_server.hash_utils import sha1_file
 from resource_pack_server.logger import get as get_logger
@@ -58,7 +58,7 @@ class ResourcePackHandler(BaseHTTPRequestHandler):
 <body>
 <h1>{safe_title}</h1>
 {body}
-<p><em>ResourcePackServer v{constants.PLUGIN_VERSION}</em></p>
+<p><em>ResourcePackServer v{__version__}</em></p>
 </body>
 </html>"""
         encoded = page.encode("utf-8")
@@ -178,7 +178,7 @@ def _handler_factory(
 class ResourcePackHttpServer:
     def __init__(self, config: RpsConfig):
         self._config = config
-        self._httpd: HTTPServer | None = None
+        self._httpd: ThreadingHTTPServer | None = None
         self._thread: threading.Thread | None = None
         self.logger = get_logger()
         self.merger = PackMerger(config)
@@ -196,7 +196,9 @@ class ResourcePackHttpServer:
         port = cfg.server.port
         handler_cls = _handler_factory(pack_dir, cfg.server.public_url, self.merger)
 
-        self._httpd = HTTPServer((host, port), handler_cls)
+        self._httpd = ThreadingHTTPServer((host, port), handler_cls)
+        self._httpd.timeout = 30
+        self._httpd.allow_reuse_address = True
         self.logger.info(f"Resource pack server starting on {host}:{port}")
         self.logger.info(f"Serving packs from: {pack_dir}")
 
