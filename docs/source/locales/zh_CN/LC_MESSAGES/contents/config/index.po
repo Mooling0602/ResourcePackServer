@@ -26,7 +26,7 @@ msgid ""
 ". In **MCDR mode**, configuration is loaded from MCDR's config file at ``con"
 "fig/resource_pack_server/config.json``."
 msgstr ""
-"在**独立模式**下，使用 CLI 参数（参见 :doc:`/contents/usage/index`）。在 **MCDR 模式**下，配置从 MCD"
+"在 **独立模式** 下，使用 CLI 参数（参见 :doc:`/contents/usage/index`）。在 **MCDR 模式** 下，配置从 MCD"
 "R 的配置文件 ``config/resource_pack_server/config.json`` 加载。"
 
 #: ../../source/contents/config/index.rst:10

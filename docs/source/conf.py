@@ -15,13 +15,13 @@ sys.modules["mcdreforged.plugin.si.server_interface"] = mock_mcdr
 sys.modules["mcdreforged.api.all"] = mock_mcdr
 sys.modules["mcdreforged"] = mock_mcdr
 
-import resource_pack_server.constants as rps_consts  # noqa: E402
+from resource_pack_server import __version__  # noqa: E402
 
 # -- Project information -----------------------------------------------------
 project = "ResourcePackServer"
 copyright = f"{datetime.datetime.now().year}, Mooling0602"
 author = "Mooling0602"
-release = rps_consts.PLUGIN_VERSION
+release = __version__
 
 # -- General configuration ---------------------------------------------------
 RTD: bool = os.environ.get("READTHEDOCS", "").lower() == "true"
