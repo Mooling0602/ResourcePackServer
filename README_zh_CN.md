@@ -15,7 +15,7 @@
 **独立模式：**
 
 ```bash
-python ResourcePackServer-v0.1.1.pyz --port 8080 --pack-dir ./resource_packs
+python ResourcePackServer-v0.1.2.pyz --port 8080 --pack-dir ./resource_packs
 ```
 
 **MCDReforged 插件模式：**

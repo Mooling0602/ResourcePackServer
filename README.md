@@ -15,7 +15,7 @@ Download the latest `.pyz` file from [GitHub Releases](https://github.com/Moolin
 **Standalone mode:**
 
 ```bash
-python ResourcePackServer-v0.1.1.pyz --port 8080 --pack-dir ./resource_packs
+python ResourcePackServer-v0.1.2.pyz --port 8080 --pack-dir ./resource_packs
 ```
 
 **MCDReforged plugin mode:**
