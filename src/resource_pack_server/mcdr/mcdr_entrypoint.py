@@ -20,6 +20,7 @@ from resource_pack_server.server import ResourcePackHttpServer
 
 _http_server: ResourcePackHttpServer | None = None
 _config: RpsConfig | None = None
+_startup_error: str | None = None
 
 
 def _reply(source: CommandSource, msg: str | RTextBase) -> None:
@@ -33,8 +34,9 @@ def _reply(source: CommandSource, msg: str | RTextBase) -> None:
 
 
 def on_load(server: PluginServerInterface, old):
-    global _config, _http_server
+    global _config, _http_server, _startup_error
     logger = get_logger()
+    _startup_error = None
 
     try:
         config = server.load_config_simple(
@@ -53,9 +55,6 @@ def on_load(server: PluginServerInterface, old):
     if not _config.enabled:
         logger.warning("ResourcePackServer is disabled in config")
         return
-
-    # Register commands
-    prefix = _config.command.prefix
 
     def _cmd_list(source: CommandSource):
         try:
@@ -84,7 +83,9 @@ def on_load(server: PluginServerInterface, old):
         _reply(source, "Plugin reloaded.")
 
     def _cmd_status(source: CommandSource):
-        if _http_server is not None and _http_server.is_running:
+        if _startup_error is not None:
+            _reply(source, f"Server failed to start: {_startup_error}")
+        elif _http_server is not None and _http_server.is_running:
             cfg = _config.server
             lines = [
                 f"Server running on {cfg.host}:{cfg.port}",
@@ -111,6 +112,9 @@ def on_load(server: PluginServerInterface, old):
         if _http_server is None:
             _reply(source, "Server not running.")
             return
+        if not _config.merge.enabled:
+            _reply(source, "Merge is disabled.")
+            return
         try:
             data, sha1 = _http_server.merger.build(force=True)
             size_mb = len(data) / (1024 * 1024)
@@ -128,35 +132,55 @@ def on_load(server: PluginServerInterface, old):
             f"{prefix} help          - Show this help",
         )
 
-    server.register_command(
-        Literal(prefix)
-        .runs(
-            lambda src: _reply(
-                src,
-                f"ResourcePackServer v{__version__}. Use {prefix} help",
+    if _config.command.enabled:
+        prefix = _config.command.prefix
+        permission_level = _config.command.permission_level
+        permission_denied = f"Permission level {permission_level} required."
+        root = (
+            Literal(prefix)
+            .requires(
+                lambda src: src.has_permission(permission_level),
+                lambda: permission_denied,
             )
+            .runs(
+                lambda src: _reply(
+                    src,
+                    f"ResourcePackServer v{__version__}. Use {prefix} help",
+                )
+            )
+            .then(Literal("list").runs(_cmd_list))
+            .then(Literal("reload").runs(_cmd_reload))
+            .then(Literal("status").runs(_cmd_status))
+            .then(Literal("help").runs(_cmd_help))
+            .then(Literal("merge").then(Literal("rebuild").runs(_cmd_merge_rebuild)))
         )
-        .then(Literal("list").runs(_cmd_list))
-        .then(Literal("reload").runs(_cmd_reload))
-        .then(Literal("status").runs(_cmd_status))
-        .then(Literal("help").runs(_cmd_help))
-        .then(Literal("merge").then(Literal("rebuild").runs(_cmd_merge_rebuild)))
-    )
 
-    server.register_help_message(
-        prefix,
-        RText("Resource Pack Server", RColor.gold).h("Manage and serve resource packs"),
-    )
+        server.register_command(root)
+        server.register_help_message(
+            prefix,
+            RText("Resource Pack Server", RColor.gold).h(
+                "Manage and serve resource packs"
+            ),
+        )
+    else:
+        logger.info("ResourcePackServer commands are disabled in config")
 
     _http_server = ResourcePackHttpServer(_config)
-    _http_server.start()
+    try:
+        _http_server.start()
+    except (OSError, zipfile.BadZipFile, ValueError) as e:
+        _startup_error = str(e)
+        _http_server = None
+        logger.error(f"ResourcePackServer failed to start: {e}")
+        return
 
     logger.info("ResourcePackServer MCDR plugin loaded")
 
 
 def on_unload(server: PluginServerInterface):
-    global _http_server
+    global _http_server, _startup_error
     if _http_server is not None:
         _http_server.stop()
         _http_server = None
+    _startup_error = None
     get_logger().info("ResourcePackServer unloaded")

@@ -90,6 +90,7 @@ Minecraft only accepts **one** resource pack URL. ResourcePackServer solves this
 * The ``pack.mcmeta`` description combines all pack descriptions
 * The ``pack.png`` icon is taken from the highest-priority pack that has one
 * The merged pack is **cached** and automatically regenerated when any source pack changes
+* Use ``--no-merge`` to disable ``/merged.zip`` and list individual packs only
 
 Example with priority:
 

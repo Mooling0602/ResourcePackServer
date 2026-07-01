@@ -20,6 +20,7 @@ class ResourcePackHandler(BaseHTTPRequestHandler):
 
     pack_dir: Path
     public_url: str
+    merge_enabled: bool
     merger: PackMerger
     _sha1_cache: ClassVar[dict[str, tuple[float, str]]] = {}  # path -> (mtime, sha1)
 
@@ -68,11 +69,32 @@ class ResourcePackHandler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(encoded)
 
+    def _public_base_url(self) -> str:
+        if self.public_url.strip():
+            return self.public_url.strip().rstrip("/")
+
+        host = self.headers.get("X-Forwarded-Host") or self.headers.get("Host", "")
+        if not host:
+            return ""
+        proto = self.headers.get("X-Forwarded-Proto", "http").split(",", 1)[0].strip()
+        return f"{proto or 'http'}://{host}".rstrip("/")
+
+    def _public_url_for(self, quoted_path: str) -> str:
+        if not quoted_path.startswith("/"):
+            quoted_path = "/" + quoted_path
+        base_url = self._public_base_url()
+        if not base_url:
+            return quoted_path
+        return f"{base_url}{quoted_path}"
+
     def do_GET(self) -> None:
         parsed = urlparse(self.path)
         path = parsed.path.lstrip("/")
 
         if path == "merged.zip":
+            if not self.merge_enabled:
+                self.send_error(404, "Merged pack is disabled")
+                return
             return self._serve_merged()
         if path == "" or path == "index.html":
             return self._list_packs()
@@ -102,20 +124,21 @@ class ResourcePackHandler(BaseHTTPRequestHandler):
     def _list_packs(self) -> None:
         rows: list[str] = []
 
-        # Merged pack link (always shown if merge enabled)
-        try:
-            data, sha1 = self.merger.build()
-            size_mb = len(data) / (1024 * 1024)
-            rows.append(
-                '<tr style="background:#e8f5e9">'
-                '<td><b><a href="/merged.zip">merged.zip</a></b> '
-                "<small>(all packs combined)</small></td>"
-                f"<td>{size_mb:.1f} MB</td>"
-                f"<td><code>{sha1}</code></td>"
-                "</tr>"
-            )
-        except (OSError, zipfile.BadZipFile, ValueError):
-            rows.append('<tr><td colspan="3">Merge unavailable</td></tr>')
+        if self.merge_enabled:
+            try:
+                data, sha1 = self.merger.build()
+                size_mb = len(data) / (1024 * 1024)
+                rows.append(
+                    '<tr style="background:#e8f5e9">'
+                    '<td><b><a href="/merged.zip">merged.zip</a></b> '
+                    "<small>(all packs combined)</small></td>"
+                    f"<td><code>{html.escape(self._public_url_for('/merged.zip'))}</code></td>"
+                    f"<td>{size_mb:.1f} MB</td>"
+                    f"<td><code>{sha1}</code></td>"
+                    "</tr>"
+                )
+            except (OSError, zipfile.BadZipFile, ValueError):
+                rows.append('<tr><td colspan="4">Merge unavailable</td></tr>')
 
         # Individual packs
         try:
@@ -127,8 +150,10 @@ class ResourcePackHandler(BaseHTTPRequestHandler):
                     safe_name = html.escape(entry.name)
                     raw_url = "/" + quote(entry.name, safe="")
                     url = html.escape(raw_url, quote=True)
+                    public_url = html.escape(self._public_url_for(raw_url))
                     rows.append(
                         f'<tr><td><a href="{url}">{safe_name}</a></td>'
+                        f"<td><code>{public_url}</code></td>"
                         f"<td>{size_mb:.1f} MB</td>"
                         f"<td><code>{sha1}</code></td></tr>"
                     )
@@ -141,7 +166,7 @@ class ResourcePackHandler(BaseHTTPRequestHandler):
         else:
             body = (
                 "<table border='1' cellpadding='6' cellspacing='0'>"
-                "<tr><th>File</th><th>Size</th><th>SHA1</th></tr>"
+                "<tr><th>File</th><th>URL</th><th>Size</th><th>SHA1</th></tr>"
                 + "".join(rows)
                 + "</table>"
             )
@@ -165,14 +190,23 @@ class ResourcePackHandler(BaseHTTPRequestHandler):
 
 
 def _handler_factory(
-    pack_dir: Path, public_url: str, merger: PackMerger
+    pack_dir: Path, public_url: str, merge_enabled: bool, merger: PackMerger
 ) -> type[ResourcePackHandler]:
     handler = type(
         "BoundHandler",
         (ResourcePackHandler,),
-        {"pack_dir": pack_dir, "public_url": public_url, "merger": merger},
+        {
+            "pack_dir": pack_dir,
+            "public_url": public_url,
+            "merge_enabled": merge_enabled,
+            "merger": merger,
+        },
     )
     return handler
+
+
+class ReusableThreadingHTTPServer(ThreadingHTTPServer):
+    allow_reuse_address = True
 
 
 class ResourcePackHttpServer:
@@ -187,6 +221,12 @@ class ResourcePackHttpServer:
     def is_running(self) -> bool:
         return self._httpd is not None
 
+    @property
+    def port(self) -> int | None:
+        if self._httpd is None:
+            return None
+        return self._httpd.server_address[1]
+
     def start(self) -> None:
         cfg = self._config
         pack_dir = cfg.pack_path
@@ -194,16 +234,17 @@ class ResourcePackHttpServer:
 
         host = cfg.server.host
         port = cfg.server.port
-        handler_cls = _handler_factory(pack_dir, cfg.server.public_url, self.merger)
+        handler_cls = _handler_factory(
+            pack_dir, cfg.server.public_url, cfg.merge.enabled, self.merger
+        )
 
-        self._httpd = ThreadingHTTPServer((host, port), handler_cls)
+        self._httpd = ReusableThreadingHTTPServer((host, port), handler_cls)
         self._httpd.timeout = 30
-        self._httpd.allow_reuse_address = True
         self.logger.info(f"Resource pack server starting on {host}:{port}")
         self.logger.info(f"Serving packs from: {pack_dir}")
 
-        # Pre-build merged pack
-        self.merger.build()
+        if cfg.merge.enabled:
+            self.merger.build()
 
         self._thread = threading.Thread(
             target=self._httpd.serve_forever,

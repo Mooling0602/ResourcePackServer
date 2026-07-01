@@ -24,6 +24,10 @@ class MergeConfig(Serializable):
     enabled: bool = True
     pack_priority: list[str] = []
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.pack_priority = list(self.pack_priority)
+
 
 class RpsConfig(Serializable):
     enabled: bool = True
@@ -31,6 +35,12 @@ class RpsConfig(Serializable):
     server: ServerConfig = ServerConfig()
     command: CommandConfig = CommandConfig()
     merge: MergeConfig = MergeConfig()
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.server = self.server.copy()
+        self.command = self.command.copy()
+        self.merge = self.merge.copy()
 
     # --- Singleton ---
 
@@ -44,7 +54,7 @@ class RpsConfig(Serializable):
         with _config_lock:
             if _config is not None:
                 return _config
-        return cls.__get_default_instance()
+        return cls.__get_default_instance().copy()
 
     # --- Derived paths ---
 

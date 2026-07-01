@@ -37,7 +37,10 @@ jobs:
 
       - name: Pack plugin
         run: |
-          uv run mcdreforged pack -i src -o ./dist --ignore-patterns "__pycache__" "*.pyc" "*.pyo" ".gitignore" --shebang "/usr/bin/env python3"
+          mkdir -p build/mcdr_pack
+          cp -r src/. build/mcdr_pack/
+          cp LICENSE build/mcdr_pack/LICENSE
+          uv run mcdreforged pack -i build/mcdr_pack -o ./dist --ignore-patterns "__pycache__" "*.pyc" "*.pyo" ".gitignore" --shebang "/usr/bin/env python3"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4

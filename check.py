@@ -3,9 +3,10 @@ import shutil
 import subprocess
 
 STEPS = [
+    ("pytest", ["pytest"]),
     ("ty", ["ty", "check", "src"]),
     ("ruff", ["ruff", "check", "src"]),
-    ("ruff", ["ruff", "format", "--check", "src"])
+    ("ruff", ["ruff", "format", "--check", "src"]),
 ]
 
 

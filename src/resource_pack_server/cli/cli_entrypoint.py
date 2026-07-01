@@ -15,7 +15,7 @@ from resource_pack_server.logger import get as get_logger
 from resource_pack_server.server import ResourcePackHttpServer
 
 
-def cli_entry() -> None:
+def create_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description=f"Resource Pack Server v{__version__}",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
@@ -33,7 +33,8 @@ def cli_entry() -> None:
         help="Public URL prefix",
     )
     parser.add_argument(
-        "--merge/--no-merge",
+        "--merge",
+        action=argparse.BooleanOptionalAction,
         default=True,
         dest="merge",
         help="Enable/disable merged pack (default: enabled)",
@@ -47,6 +48,11 @@ def cli_entry() -> None:
     )
     parser.add_argument("--debug", action="store_true", help="Enable debug logging")
     parser.add_argument("--version", action="store_true", help="Show version and exit")
+    return parser
+
+
+def cli_entry() -> None:
+    parser = create_parser()
 
     args = parser.parse_args()
 
