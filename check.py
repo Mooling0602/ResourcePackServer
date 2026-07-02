@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 import shutil
 import subprocess
+import sys
 
 STEPS = [
-    ("pytest", ["pytest"]),
+    ("unittest", [sys.executable, "-m", "unittest", "discover", "-s", "tests"]),
     ("ty", ["ty", "check", "src"]),
     ("ruff", ["ruff", "check", "src"]),
     ("ruff", ["ruff", "format", "--check", "src"]),
