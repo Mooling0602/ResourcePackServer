@@ -6,7 +6,7 @@ Strategy:
   - pack.mcmeta: use the highest-priority pack's mcmeta; append descriptions
     from lower-priority packs into the description field.
   - pack.png: use the highest-priority pack that has one.
-  - Result cached to memory; regenerated when any source mtime changes.
+  - Result cached to memory; regenerated when any source fingerprint changes.
 """
 
 import io
@@ -18,6 +18,13 @@ from pathlib import Path
 from resource_pack_server.config import RpsConfig
 from resource_pack_server.hash_utils import sha1_hex
 from resource_pack_server.logger import get as get_logger
+
+PackFingerprint = tuple[int, int]
+
+
+def _pack_fingerprint(path: Path) -> PackFingerprint:
+    stat = path.stat()
+    return stat.st_mtime_ns, stat.st_size
 
 
 def _list_packs(pack_dir: Path) -> list[Path]:
@@ -105,22 +112,22 @@ class PackMerger:
         self._config = config
         self._lock = threading.Lock()
         self._cache: tuple[bytes, str] | None = None  # (zip_data, sha1)
-        self._cache_mtimes: dict[str, float] = {}
+        self._cache_fingerprints: dict[str, PackFingerprint] = {}
         self.logger = get_logger()
 
     def _needs_rebuild(self, packs: list[Path]) -> bool:
-        """Check if any pack's mtime has changed since last build."""
+        """Check if any pack fingerprint has changed since last build."""
         for p in packs:
             try:
-                mtime = p.stat().st_mtime
+                fingerprint = _pack_fingerprint(p)
             except FileNotFoundError:
                 return True
-            if p.name not in self._cache_mtimes:
+            if p.name not in self._cache_fingerprints:
                 return True
-            if mtime != self._cache_mtimes[p.name]:
+            if fingerprint != self._cache_fingerprints[p.name]:
                 return True
         # Also check if packs were added/removed
-        return set(self._cache_mtimes.keys()) != {p.name for p in packs}
+        return set(self._cache_fingerprints.keys()) != {p.name for p in packs}
 
     def build(self, force: bool = False) -> tuple[bytes, str]:
         """Return (merged_zip_bytes, sha1_hex). Cached unless force=True
@@ -192,7 +199,7 @@ class PackMerger:
                 data = buf.getvalue()
                 sha1 = sha1_hex(data)
                 self._cache = (data, sha1)
-                self._cache_mtimes = {}
+                self._cache_fingerprints = {}
                 return data, sha1
 
             # Merge: lower index = higher priority
@@ -220,7 +227,7 @@ class PackMerger:
             sha1 = sha1_hex(data)
 
             # Update cache
-            self._cache_mtimes = {p.name: p.stat().st_mtime for p in packs}
+            self._cache_fingerprints = {p.name: _pack_fingerprint(p) for p in packs}
             self._cache = (data, sha1)
 
             self.logger.info(
@@ -231,4 +238,4 @@ class PackMerger:
     def invalidate(self) -> None:
         """Force next build() to regenerate."""
         with self._lock:
-            self._cache_mtimes.clear()
+            self._cache_fingerprints.clear()

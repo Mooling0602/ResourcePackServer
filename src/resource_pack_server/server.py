@@ -22,7 +22,8 @@ class ResourcePackHandler(BaseHTTPRequestHandler):
     public_url: str
     merge_enabled: bool
     merger: PackMerger
-    _sha1_cache: ClassVar[dict[str, tuple[float, str]]] = {}  # path -> (mtime, sha1)
+    _sha1_cache: ClassVar[dict[str, tuple[tuple[int, int], str]]] = {}
+    # path -> ((mtime_ns, size), sha1)
 
     def log_message(self, format: str, *args) -> None:
         get_logger().info(format % args)
@@ -120,12 +121,13 @@ class ResourcePackHandler(BaseHTTPRequestHandler):
     @classmethod
     def _cached_sha1(cls, path: Path) -> str:
         key = str(path)
-        mtime = path.stat().st_mtime
+        stat = path.stat()
+        fingerprint = (stat.st_mtime_ns, stat.st_size)
         cached = cls._sha1_cache.get(key)
-        if cached and cached[0] == mtime:
+        if cached and cached[0] == fingerprint:
             return cached[1]
         sha1 = sha1_file(path)
-        cls._sha1_cache[key] = (mtime, sha1)
+        cls._sha1_cache[key] = (fingerprint, sha1)
         return sha1
 
     def _list_packs(self) -> None:
