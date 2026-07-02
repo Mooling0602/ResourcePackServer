@@ -17,6 +17,7 @@ wheels/
 
 # UV
 uv.lock
+.python-version
 
 # Local tooling
 .codegraph/
