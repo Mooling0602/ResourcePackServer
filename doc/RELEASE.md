@@ -1,7 +1,7 @@
 # RELEASE
 This is a MCDR plugin repository, so use git tags to mark plugin versions.
 
-## What's should I do
+## What should I do
 
 1. Make sure there's no issues with the source code and any other files in git system.
 
@@ -36,7 +36,7 @@ This is a MCDR plugin repository, so use git tags to mark plugin versions.
 
 It will be triggered whenever any new qualifying commit is pushed to GitHub, and build artifacts then.
 
-> Build command is very simple. After uv environment is set up, just run `mcdreforged pack` in the repository root, then the *.mcdr file is the artifact.
+> Build command copies `src/.` and `LICENSE` into `build/mcdr_pack`, then runs `mcdreforged pack` and uploads the generated `dist/*.pyz` file as the artifact.
 
 A qualifying commit which can trigger CI should match one of the following conditions:
 
@@ -51,4 +51,4 @@ A qualifying commit which can trigger CI should match one of the following condi
 When release is triggered, the CI should set the release title to v<version> (like `v1.0.0`) and parse the change log from [CHANGELOG](CHANGELOG.md), and replace `**#full_changelog**` with `**Full changelog**: <url>`.
 > Shouldn't change the content or add extra informations to the release note!
 
-> For `<url>`, use this [script](.github/scripts/get_link.py) to get the compare link, usage is `.github/scripts/get_link.py --compare <old_tag> <new_tag>`, or provide `<old_tag>` only for the first release version.
+> For `<url>`, use this [script](../.github/scripts/get_link.py) to get the compare link, usage is `.github/scripts/get_link.py --compare <old_tag> <new_tag>`, or provide `<old_tag>` only for the first release version.
