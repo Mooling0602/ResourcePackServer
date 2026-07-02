@@ -1,4 +1,5 @@
 import tempfile
+import unittest
 import urllib.error
 import urllib.request
 import zipfile
@@ -26,39 +27,92 @@ def _write_pack(path: Path) -> None:
         )
 
 
-def test_merged_endpoint_is_not_served_when_merge_is_disabled() -> None:
-    with tempfile.TemporaryDirectory() as tmp:
-        pack_dir = Path(tmp)
-        _write_pack(pack_dir / "one.zip")
-        server = ResourcePackHttpServer(_make_config(pack_dir, merge_enabled=False))
-        try:
-            server.start()
-            assert server.port is not None
-            url = f"http://127.0.0.1:{server.port}/merged.zip"
-
+class ResourcePackHttpServerTest(unittest.TestCase):
+    def test_merged_endpoint_is_not_served_when_merge_is_disabled(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            pack_dir = Path(tmp)
+            _write_pack(pack_dir / "one.zip")
+            server = ResourcePackHttpServer(_make_config(pack_dir, merge_enabled=False))
             try:
-                urllib.request.urlopen(url, timeout=5)
-            except urllib.error.HTTPError as exc:
-                assert exc.code == 404
-            else:
-                raise AssertionError("/merged.zip should be disabled")
-        finally:
-            server.stop()
+                server.start()
+                self.assertIsNotNone(server.port)
+                url = f"http://127.0.0.1:{server.port}/merged.zip"
+
+                with self.assertRaises(urllib.error.HTTPError) as cm:
+                    urllib.request.urlopen(url, timeout=5)
+                self.assertEqual(cm.exception.code, 404)
+            finally:
+                server.stop()
+
+    def test_index_uses_public_url_and_hides_merged_when_disabled(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            pack_dir = Path(tmp)
+            _write_pack(pack_dir / "one.zip")
+            server = ResourcePackHttpServer(_make_config(pack_dir, merge_enabled=False))
+            try:
+                server.start()
+                self.assertIsNotNone(server.port)
+                url = f"http://127.0.0.1:{server.port}/"
+                with urllib.request.urlopen(url, timeout=5) as response:
+                    body = response.read().decode("utf-8")
+
+                self.assertNotIn("merged.zip", body)
+                self.assertIn("https://packs.example.test/base/one.zip", body)
+            finally:
+                server.stop()
+
+    def test_can_download_pack_with_url_encoded_filename(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            pack_dir = Path(tmp)
+            _write_pack(pack_dir / "pack with space.zip")
+            server = ResourcePackHttpServer(_make_config(pack_dir, merge_enabled=False))
+            try:
+                server.start()
+                self.assertIsNotNone(server.port)
+                index_url = f"http://127.0.0.1:{server.port}/"
+                with urllib.request.urlopen(index_url, timeout=5) as response:
+                    body = response.read().decode("utf-8")
+
+                self.assertIn("/pack%20with%20space.zip", body)
+
+                pack_url = f"http://127.0.0.1:{server.port}/pack%20with%20space.zip"
+                with urllib.request.urlopen(pack_url, timeout=5) as response:
+                    data = response.read()
+
+                self.assertGreater(len(data), 0)
+                self.assertEqual(response.status, 200)
+                self.assertEqual(response.headers["Content-Type"], "application/zip")
+            finally:
+                server.stop()
+
+    def test_can_download_pack_with_non_ascii_filename(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            pack_dir = Path(tmp)
+            _write_pack(pack_dir / "中文.zip")
+            server = ResourcePackHttpServer(_make_config(pack_dir, merge_enabled=False))
+            try:
+                server.start()
+                self.assertIsNotNone(server.port)
+                index_url = f"http://127.0.0.1:{server.port}/"
+                with urllib.request.urlopen(index_url, timeout=5) as response:
+                    body = response.read().decode("utf-8")
+
+                self.assertIn("/%E4%B8%AD%E6%96%87.zip", body)
+
+                pack_url = f"http://127.0.0.1:{server.port}/%E4%B8%AD%E6%96%87.zip"
+                with urllib.request.urlopen(pack_url, timeout=5) as response:
+                    data = response.read()
+                    content_disposition = response.headers["Content-Disposition"]
+
+                self.assertGreater(len(data), 0)
+                self.assertEqual(response.status, 200)
+                self.assertEqual(response.headers["Content-Type"], "application/zip")
+                self.assertIn(
+                    "filename*=UTF-8''%E4%B8%AD%E6%96%87.zip", content_disposition
+                )
+            finally:
+                server.stop()
 
 
-def test_index_uses_public_url_and_hides_merged_when_disabled() -> None:
-    with tempfile.TemporaryDirectory() as tmp:
-        pack_dir = Path(tmp)
-        _write_pack(pack_dir / "one.zip")
-        server = ResourcePackHttpServer(_make_config(pack_dir, merge_enabled=False))
-        try:
-            server.start()
-            assert server.port is not None
-            url = f"http://127.0.0.1:{server.port}/"
-            with urllib.request.urlopen(url, timeout=5) as response:
-                body = response.read().decode("utf-8")
-
-            assert "merged.zip" not in body
-            assert "https://packs.example.test/base/one.zip" in body
-        finally:
-            server.stop()
+if __name__ == "__main__":
+    unittest.main()

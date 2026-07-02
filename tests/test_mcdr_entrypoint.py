@@ -1,3 +1,6 @@
+import unittest
+from unittest.mock import patch
+
 from resource_pack_server.config import RpsConfig
 from resource_pack_server.mcdr import mcdr_entrypoint
 
@@ -41,21 +44,27 @@ class _Server:
         pass
 
 
-def test_mcdr_on_load_records_http_startup_error(monkeypatch) -> None:
-    config = RpsConfig.get_default()
-    server = _Server(config)
+class McdrEntrypointTest(unittest.TestCase):
+    def test_mcdr_on_load_records_http_startup_error(self) -> None:
+        config = RpsConfig.get_default()
+        server = _Server(config)
 
-    class _FailingHttpServer:
-        def __init__(self, config: RpsConfig) -> None:
-            self.config = config
+        class _FailingHttpServer:
+            def __init__(self, config: RpsConfig) -> None:
+                self.config = config
 
-        def start(self) -> None:
-            raise OSError("address already in use")
+            def start(self) -> None:
+                raise OSError("address already in use")
 
-    monkeypatch.setattr(mcdr_entrypoint, "ResourcePackHttpServer", _FailingHttpServer)
+        with patch.object(
+            mcdr_entrypoint, "ResourcePackHttpServer", _FailingHttpServer
+        ):
+            mcdr_entrypoint.on_load(server, None)
 
-    mcdr_entrypoint.on_load(server, None)
+        self.assertEqual(mcdr_entrypoint._startup_error, "address already in use")
+        self.assertIsNone(mcdr_entrypoint._http_server)
+        self.assertTrue(server.commands)
 
-    assert mcdr_entrypoint._startup_error == "address already in use"
-    assert mcdr_entrypoint._http_server is None
-    assert server.commands
+
+if __name__ == "__main__":
+    unittest.main()

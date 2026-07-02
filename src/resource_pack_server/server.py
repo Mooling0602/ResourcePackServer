@@ -6,7 +6,7 @@ import zipfile
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import ClassVar
-from urllib.parse import quote, urlparse
+from urllib.parse import quote, unquote, urlparse
 
 from resource_pack_server import __version__
 from resource_pack_server.config import RpsConfig
@@ -27,11 +27,18 @@ class ResourcePackHandler(BaseHTTPRequestHandler):
     def log_message(self, format: str, *args) -> None:
         get_logger().info(format % args)
 
+    @staticmethod
+    def _content_disposition(name: str) -> str:
+        fallback = name.encode("ascii", "ignore").decode("ascii") or "pack.zip"
+        fallback = fallback.replace("\\", "_").replace('"', r"\"")
+        encoded_name = quote(name, safe="")
+        return f"attachment; filename=\"{fallback}\"; filename*=UTF-8''{encoded_name}"
+
     def _send_zip(self, data: bytes, name: str, sha1: str) -> None:
         self.send_response(200)
         self.send_header("Content-Type", "application/zip")
         self.send_header("Content-Length", str(len(data)))
-        self.send_header("Content-Disposition", f'attachment; filename="{name}"')
+        self.send_header("Content-Disposition", self._content_disposition(name))
         self.send_header("X-Resource-Pack-SHA1", sha1)
         self.send_header("Cache-Control", "public, max-age=3600")
         self.end_headers()
@@ -43,7 +50,7 @@ class ResourcePackHandler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-Type", "application/zip")
         self.send_header("Content-Length", str(size))
-        self.send_header("Content-Disposition", f'attachment; filename="{name}"')
+        self.send_header("Content-Disposition", self._content_disposition(name))
         self.send_header("X-Resource-Pack-SHA1", sha1)
         self.send_header("Cache-Control", "public, max-age=3600")
         self.end_headers()
@@ -89,7 +96,7 @@ class ResourcePackHandler(BaseHTTPRequestHandler):
 
     def do_GET(self) -> None:
         parsed = urlparse(self.path)
-        path = parsed.path.lstrip("/")
+        path = unquote(parsed.path).lstrip("/")
 
         if path == "merged.zip":
             if not self.merge_enabled:
