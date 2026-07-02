@@ -18,7 +18,7 @@ Python 3.12+ Minecraft resource pack server with two runtime modes: standalone H
 - `uv sync --all-groups` installs runtime, dev, and docs dependencies.
 - `uv run python main.py --port 8080 --pack-dir ./resource_packs` runs standalone mode.
 - `uv run python -m resource_pack_server` runs the package entrypoint.
-- `python check.py` runs pytest, `ty check src`, `ruff check src`, and `ruff format --check src` when those tools are installed.
+- `python check.py` runs unittest discovery, `ty check src`, `ruff check src`, and `ruff format --check src` when those tools are installed.
 - To build the `.pyz`, copy `src/.` and `LICENSE` into `build/mcdr_pack/`, then run `uv run mcdreforged pack -i build/mcdr_pack -o ./dist --ignore-patterns "__pycache__" "*.pyc" "*.pyo" ".gitignore" --shebang "/usr/bin/env python3"`.
 - `cd docs && uv run ./build_docs.sh` builds documentation.
 
@@ -28,11 +28,13 @@ Use Ruff formatting and keep code type-check friendly for ty. Follow standard Py
 
 ## Testing Guidelines
 
-Add focused pytest coverage for bug fixes and run `python check.py`. Manually verify the affected entrypoint with `uv run` when changing CLI or server startup behavior. Cover standalone and MCDR behavior when changing shared modules such as `server.py`, `config.py`, or `pack_merger.py`.
+Add focused unittest coverage for bug fixes and run `python check.py`. Manually verify the affected entrypoint with `uv run` when changing CLI or server startup behavior. Cover standalone and MCDR behavior when changing shared modules such as `server.py`, `config.py`, or `pack_merger.py`.
 
 ## Commit & Pull Request Guidelines
 
 Recent history uses conventional prefixes such as `fix:`, `docs:`, and `release:`. Keep commits small and behavior-focused, for example `fix: honor merge disabled config`. Pull requests should describe the user-visible change, list verification commands, note MCDR compatibility risks, and link related issues when available.
+
+About how CI works for releasing a new version, see [RELEASE](doc/RELEASE.md).
 
 ## Configuration & Security Notes
 

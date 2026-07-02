@@ -45,7 +45,7 @@ cp LICENSE build/mcdr_pack/LICENSE
 uv run mcdreforged pack -i build/mcdr_pack -o ./dist --ignore-patterns "__pycache__" "*.pyc" "*.pyo" ".gitignore" --shebang "/usr/bin/env python3"
 ```
 
-`check.py` 会在工具已安装时运行 pytest、ty、Ruff lint 和 Ruff format 检查。
+`check.py` 会运行 unittest discovery，并在工具已安装时运行 ty、Ruff lint 和 Ruff format 检查。
 
 ## 许可证
 
